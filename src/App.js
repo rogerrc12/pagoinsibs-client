@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 import MainApp from "./components/MainApp";
 // Helpers
 import setAuthToken from "./helpers/setAuthToken";
+import history from "./helpers/history";
 // Redux
 import { Provider } from "react-redux";
 import store from "./store";
@@ -23,7 +24,7 @@ function App() {
 
   return (
     <Provider store={store}>
-      <Router primary={false}>
+      <Router primary={false} history={history}>
         <MainApp />
       </Router>
     </Provider>
