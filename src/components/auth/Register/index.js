@@ -1,75 +1,15 @@
 import React, { useState } from "react";
-import axios from "../../../helpers/axios";
 import PropTypes from "prop-types";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { Formik, Form } from "formik";
 import GoogleLogin from "react-google-login";
 import RegisterDetails from "./RegisterDetails";
 import AccountDetails from "./AccountDetails";
-import * as Yup from "yup";
+// HELPERS
+import { userSignupValidation } from "../../../helpers/validations";
 // REDUX
 import { connect } from "react-redux";
 import { registerUser, setGoogleLogin } from "../../../actions/auth";
-
-const formSchema = Yup.object().shape({
-  first_name: Yup.string().required("Introduce tu primer nombre."),
-  last_name: Yup.string().required("Introduce tu primer apellido."),
-  ci_type: Yup.string().required("Selecciona un tipo de cédula."),
-  ci_number: Yup.string()
-    .required("Introduce tu cédula de identidad.")
-    .matches(/^[0-9]{5,8}$/i, "Cédula incorrecta. Verifica el largo.")
-    .test(
-      "unique-cedula",
-      "Ya existe una cuenta con esta cédula. Si ya estás registrado inicia sesión.",
-      async (cedula) => {
-        if (typeof cedula === "undefined") return null;
-        const res = await axios.post(
-          "/api/validation/cedula",
-          { cedula },
-          { headers: { "Content-Type": "application/json" } }
-        );
-        return !res.data;
-      }
-    ),
-  email: Yup.string()
-    .required("Introduce un correo electrónico.")
-    .email("Formato de correo inválido.")
-    .test(
-      "unique-email",
-      "Ya existe una cuenta con este correo. Si ya estás registrado inicia sesión.",
-      async (email) => {
-        if (typeof email === "undefined") return null;
-        const res = await axios.post(
-          "/api/validation/email",
-          { email },
-          { headers: { "Content-Type": "application/json" } }
-        );
-        return !res.data;
-      }
-    ),
-  username: Yup.string()
-    .required("Introduce un nombre de usuario.")
-    .matches(
-      /^(?=.*\d)(?=.*[a-zA-Z])[A-Za-z\d]{4,12}$/i,
-      "Debe contener al menos 1 letra y 1 número. Máximo 12 caracteres."
-    )
-    .test("unique-payId", "Este nombre de usuario se ya existe, por favor utilice otro.", async (pay_id) => {
-      if (typeof pay_id === "undefined") return null;
-      const res = await axios.post(
-        "/api/validation/username",
-        { pay_id },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      return !res.data;
-    }),
-  password: Yup.string()
-    .required("Introduce una contraseña.")
-    .matches(/^(?=.*\d)(?=.*[a-zA-Z])[A-Za-z\d!@#$%^&*()_\-+=]{6,}$/, "Debe contener al menos 1 letras y 1 número."),
-  confirm_password: Yup.string()
-    .required("Debes confirmar la contraseña.")
-    .oneOf([Yup.ref("password"), null], "Las contraseñas no coinciden."),
-  terms: Yup.bool().required("Debes aceptar los términos y condiciones."),
-});
 
 const pages = (values, errors, touched) => [
   <RegisterDetails values={values} errors={errors} touched={touched} />,
@@ -115,7 +55,7 @@ const Register = ({ auth: { isAuthenticated, user }, registerUser, setGoogleLogi
 
           <Formik
             initialValues={initialValues}
-            validationSchema={formSchema}
+            validationSchema={userSignupValidation()}
             enableReinitialize={true}
             onSubmit={(values) => registerUser(values)}
           >
