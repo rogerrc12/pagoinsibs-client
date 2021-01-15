@@ -9,7 +9,7 @@ import AccountDetails from "./AccountDetails";
 import { userSignupValidation } from "../../../helpers/validations";
 // REDUX
 import { connect } from "react-redux";
-import { registerUser, setGoogleLogin } from "../../../actions/auth";
+import { registerUser, setGoogleLogin } from "../../../store/actions/auth";
 
 const pages = (values, errors, touched) => [
   <RegisterDetails values={values} errors={errors} touched={touched} />,
@@ -88,11 +88,7 @@ const Register = ({ auth: { isAuthenticated, user }, registerUser, setGoogleLogi
                         className="button"
                         type="button"
                         onClick={nextPage}
-                        disabled={
-                          !values.first_name || !values.last_name || !values.email || errors.email || !values.terms
-                            ? true
-                            : false
-                        }
+                        disabled={!values.first_name || !values.last_name || !values.email || errors.email || !values.terms ? true : false}
                       >
                         Continuar
                       </button>

@@ -1,34 +1,23 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Modal from "../layout/Modal";
-import ProfileForm from "../private/profile/forms/ProfileForm";
+import ProfileForm from "../private/ProfileForm";
 import { Route, Redirect } from "react-router-dom";
 // Redux
 import { connect } from "react-redux";
-import { showModal } from "../../actions/modal";
+import { showModal } from "../../store/actions";
 
 const PrivateRoute = ({ component: Component, auth: { isAuthenticated, user }, showModal, ...rest }) => {
   useEffect(() => {
-    if (!user.profileCompleted && isAuthenticated) {
-      showModal();
-    }
-  });
+    if (!user.profileCompleted && isAuthenticated) showModal();
+  }, [user, isAuthenticated, showModal]);
 
   return !user.profileCompleted && isAuthenticated ? (
     <Modal>
       <ProfileForm />
     </Modal>
   ) : (
-    <Route
-      {...rest}
-      render={(props) =>
-        !isAuthenticated ? (
-          <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
-        ) : (
-          <Component {...props} />
-        )
-      }
-    />
+    <Route {...rest} render={(props) => (!isAuthenticated ? <Redirect to={{ pathname: "/login", state: { from: props.location } }} /> : <Component {...props} />)} />
   );
 };
 
@@ -38,7 +27,7 @@ PrivateRoute.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth,
+    auth: state.Auth,
   };
 };
 

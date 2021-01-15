@@ -8,7 +8,7 @@
   --text-color: #444;
   --btn-color: #e3fcee;
   --light-color: #f4f4f4;
-  --form-input-color: #666;
+  --form-input-color: #bbb;
   --input-focus-color: #37ce7b;
   --error-color: #db5656;
 }
@@ -54,6 +54,14 @@ body {
   font-family: "Nunito", sans-serif;
   color: var(--text-color);
   font-size: 16px;
+}
+
+body.swal2-height-auto {
+  height: 100% !important;
+}
+
+.swal2-container {
+  z-index: 9999;
 }
 
 h1,
@@ -164,7 +172,7 @@ select {
 }
 
 .button:disabled {
-  background-color: #666;
+  opacity: 0.65;
 }
 
 .pagos-form input:disabled {
@@ -205,23 +213,8 @@ select {
 
 .form-group {
   text-align: left;
-  margin: 1rem 0;
+  margin: 8px 0 12px;
   font-size: 1rem;
-}
-
-.form-group label {
-  text-transform: uppercase;
-  color: var(--form-input-color);
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-bottom: 0;
-}
-
-@media screen and (min-width: 35rem) {
-  .form-group label {
-    font-size: 0.85rem;
-  }
 }
 
 .form-group label small {
@@ -230,6 +223,10 @@ select {
   cursor: pointer;
   text-transform: lowercase;
   font-size: 0.85rem;
+}
+
+.form-group-radio .form-check-input {
+  margin-top: 0;
 }
 
 select option:disabled {
@@ -264,7 +261,7 @@ select option:disabled {
 .form-error,
 .form-msg,
 .form-warning {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin-top: 0.5rem;
   display: block;
   color: var(--error-color);
@@ -339,7 +336,7 @@ select option:disabled {
 
 .form-msg {
   color: #777;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 .form-group select {
@@ -357,20 +354,6 @@ select option:disabled {
   border-bottom: 1px solid var(--form-input-color);
   width: 100%;
   border-radius: 0 !important;
-}
-
-.input-group input {
-  width: 60%;
-}
-
-.form-group .input-group-text {
-  width: auto;
-}
-
-@media screen and (min-width: 35rem) {
-  .input-group input {
-    width: 35%;
-  }
 }
 
 .form-group-flex {
@@ -395,6 +378,11 @@ input:focus,
 input.error:focus,
 .form-group select.error:focus {
   border-color: var(--error-color);
+}
+
+.input-group {
+  flex-wrap: nowrap;
+  width: 90%;
 }
 
 .icon-group {
@@ -452,21 +440,22 @@ table caption {
   background-color: rgb(2, 128, 170);
 }
 
-.status .exitosa,
-.status.exitosa {
+.status .exitoso,
+.status.exitoso {
   background-color: rgb(3, 184, 75);
 }
 
-.status .fallida,
-.status.fallida,
-.status .vencida,
-.status.vencida {
+.status .cancelado,
+.status.cancelado,
+.status .vencido,
+.status.vencido {
   background-color: #ff4444;
 }
 
 .form-check {
   display: flex;
   margin: 0.3rem 0;
+  align-items: center;
 }
 
 .form-check-group .form-check-input {
@@ -1359,11 +1348,7 @@ a.mobile-nav__btn {
 /* MAIN - CONTACT */
 .main-contact {
   text-align: center;
-  background: linear-gradient(
-    to right,
-    var(--green-light),
-    var(--primary-color)
-  );
+  background: linear-gradient(to right, var(--green-light), var(--primary-color));
   height: auto;
   color: #fff;
 }
@@ -1661,10 +1646,8 @@ a.mobile-nav__btn {
 .pagos-form select {
   margin: 0;
   padding: 0.5em 1em 0.5em 0;
-  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%);
-  background-position: calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px);
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
   background-size: 5px 5px, 5px 5px, 1px 1.5em;
   background-repeat: no-repeat;
   -webkit-appearance: none;
@@ -2177,7 +2160,7 @@ a.mobile-nav__btn {
 
 @media screen and (min-width: 35rem) {
   .user-table__container {
-    max-width: 40rem;
+    max-width: 45rem;
   }
 
   .user-table__container .MuiPaper-root {
@@ -2211,7 +2194,7 @@ a.mobile-nav__btn {
 .transactions-container > div {
   margin: 0 auto;
   background-color: #eee;
-  max-width: 35rem;
+  max-width: 60rem;
   width: auto;
 }
 
@@ -2301,13 +2284,7 @@ a.mobile-nav__btn {
 }
 
 .user-table {
-  min-width: 27rem;
-}
-
-@media screen and (min-width: 35rem) {
-  .user-table {
-    min-width: 35rem;
-  }
+  width: 100%;
 }
 
 .user-table .table-link {
@@ -2866,10 +2843,7 @@ input.error {
 
 .main-pago__section {
   width: 100%;
-  max-width: 40rem;
-  margin: 0 auto;
   padding: 0 1rem 1rem;
-  display: grid;
   justify-content: center;
   text-align: center;
 }
@@ -2918,18 +2892,18 @@ input.error {
   border-top-right-radius: 0.5rem;
 }
 
-.pagos-form {
+/* .pagos-form {
   background-color: #fff;
   border-radius: 8px;
   width: 100%;
-  max-width: 35rem;
+  max-width: 40rem;
   margin: 0 auto;
   text-align: left;
   border: 1px solid #ededed;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.15);
   position: relative;
   min-width: 19rem;
-}
+} */
 
 @media screen and (min-width: 25rem) {
   .pagos-form {
@@ -3213,7 +3187,6 @@ input.error {
 .suppliers-select .css-1pahdxg-control:hover {
   border-color: var(--input-focus-color);
 }
-
 /* DASHBOARD - PAGO TDC */
 
 .credit-card-group .card-label {
@@ -3532,12 +3505,7 @@ input.error {
   height: 1px;
   width: 100%;
   margin-bottom: 10px;
-  background: linear-gradient(
-    to right,
-    var(--green-light) 0%,
-    #fff 50%,
-    var(--green-light) 100%
-  );
+  background: linear-gradient(to right, var(--green-light) 0%, #fff 50%, var(--green-light) 100%);
 }
 
 /* LOADER CSS */
@@ -3699,10 +3667,8 @@ input.error {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%);
-  background-position: calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px), calc(100% - 5.5em) 0.5em;
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), calc(100% - 5.5em) 0.5em;
   background-size: 5px 5px, 5px 5px, 1px 1.5em;
   background-repeat: no-repeat;
 }
@@ -3813,16 +3779,16 @@ input.error {
 
 /* REACT DATEPICKER */
 
-.payment-date-group .MuiInput-root {
-  width: 50%;
-}
-
 .MuiDialog-paper {
   margin: 10px;
 }
 
 .MuiFormControl-root {
   width: 100%;
+}
+
+.payment-date-group .MuiFormControl-root {
+  margin-top: 14px;
 }
 
 .MuiButton-label h6 {
@@ -4034,11 +4000,7 @@ input.MuiInputBase-input.MuiInput-input {
 }
 
 .rccs__card--unknown > div {
-  background: linear-gradient(
-    25deg,
-    var(--primary-color),
-    var(--input-focus-color)
-  );
+  background: linear-gradient(25deg, var(--primary-color), var(--input-focus-color));
 }
 
 .rccs__card--maestro .rccs__card__background,

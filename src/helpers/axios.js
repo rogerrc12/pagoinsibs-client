@@ -13,4 +13,27 @@ const axiosInstance = axios.create({
   timeout: 10000,
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    console.log(`Request type ${config.method.toUpperCase()} sent to ${config.url} at ${new Date().toLocaleTimeString()}`);
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    console.log(error);
+    console.warn("Error status", error.response.status);
+    if (error.response) {
+      return Promise.reject(error.response);
+    } else {
+      return Promise.reject(error);
+    }
+  }
+);
+
 export default axiosInstance;

@@ -1,34 +1,37 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import React, { useState } from "react";
+import axios from "axios";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 // REDUX
-import { connect } from 'react-redux';
-import { requestTransfer } from '../../../../../actions/transactions';
+import { connect } from "react-redux";
+import { requestTransfer } from "../../../../../store/actions/transactions";
 
-const initialValues = { email: '', description: '', amount: 0 };
+const initialValues = { email: "", description: "", amount: 0 };
 const formSchema = Yup.object().shape({
-  email: Yup.string().email().required('Debes colocar un email'),
+  email: Yup.string()
+    .email()
+    .required("Debes colocar un email"),
   description: Yup.string().notRequired(),
-  amount: Yup.number().notRequired()
+  amount: Yup.number().notRequired(),
 });
 
 const RequestForm = ({ requestTransfer }) => {
   // check email exists or not
-  const [state, setState] = useState('normal');
+  const [state, setState] = useState("normal");
 
   return (
-    <Formik initialValues={initialValues} validationSchema={formSchema}
+    <Formik
+      initialValues={initialValues}
+      validationSchema={formSchema}
       onSubmit={async (values, { resetForm, setSubmitting }) => {
-
         const { email } = values;
-        if (state === 'normal') {
-          console.log(state, email)
-          const config = {headers: {'Content-Type':'application/json'}}
-          const body = JSON.stringify({email});
+        if (state === "normal") {
+          console.log(state, email);
+          const config = { headers: { "Content-Type": "application/json" } };
+          const body = JSON.stringify({ email });
           try {
-            const res = await axios.post('/api/validation/email', body, config);
-            return res.data.length > 0 ? setState('encontrado') : setState('no encontrado');
+            const res = await axios.post("/api/validation/email", body, config);
+            return res.data.length > 0 ? setState("encontrado") : setState("no encontrado");
           } catch (error) {
             console.error(error);
             return false;
@@ -39,37 +42,48 @@ const RequestForm = ({ requestTransfer }) => {
             setSubmitting(false);
           }
         }
-
       }}
     >
       {({ isValid }) => (
         <Form className="pagos-form">
           <div className="pagos-form__container">
-
             <div className="form-group">
               <label htmlFor="email">Correo electrónico</label>
-              <Field type="email" name="email" id="email" onBlur={async e => {
-                if (e.target.value === '') return null;
-                const config = {headers: {'Content-Type':'application/json'}}
-                const res = await axios.post('/api/validation/email', JSON.stringify({ email: e.target.value }), config);
-                return res.data.length > 0 ? setState('encontrado') : setState('no encontrado');
-              }} />
+              <Field
+                type="email"
+                name="email"
+                id="email"
+                onBlur={async (e) => {
+                  if (e.target.value === "") return null;
+                  const config = { headers: { "Content-Type": "application/json" } };
+                  const res = await axios.post("/api/validation/email", JSON.stringify({ email: e.target.value }), config);
+                  return res.data.length > 0 ? setState("encontrado") : setState("no encontrado");
+                }}
+              />
               <ErrorMessage name="email">
-                {message => <span className="form-error"><i className="fas fa-warning"></i> {message}</span>}
+                {(message) => (
+                  <span className="form-error">
+                    <i className="fas fa-warning"></i> {message}
+                  </span>
+                )}
               </ErrorMessage>
             </div>
 
-            { state === 'no encontrado' &&
-              <p className="form-msg">Lo sentimos pero este usuario no está registrado. Puedes enviarle una invitación de registro.</p> }
+            {state === "no encontrado" && (
+              <p className="form-msg">Lo sentimos pero este usuario no está registrado. Puedes enviarle una invitación de registro.</p>
+            )}
 
-            {
-              state === 'no encontrado' ? null :
+            {state === "no encontrado" ? null : (
               <>
                 <div className="form-group">
                   <label htmlFor="description">Descripción:</label>
                   <Field type="text" name="description" id="description" />
                   <ErrorMessage name="description">
-                    {message => <span className="form-error"><i className="fas fa-warning"></i> {message}</span>}
+                    {(message) => (
+                      <span className="form-error">
+                        <i className="fas fa-warning"></i> {message}
+                      </span>
+                    )}
                   </ErrorMessage>
                 </div>
 
@@ -82,20 +96,24 @@ const RequestForm = ({ requestTransfer }) => {
                     </div>
                   </div>
                   <ErrorMessage name="amount">
-                    {message => <span className="form-error"><i className="fas fa-warning"></i> {message}</span>}
+                    {(message) => (
+                      <span className="form-error">
+                        <i className="fas fa-warning"></i> {message}
+                      </span>
+                    )}
                   </ErrorMessage>
                 </div>
               </>
-            }
+            )}
 
             <button type="submit" className="button" disabled={!isValid}>
-              { state === 'no encontrado' ? 'Enviar invitación' : 'Enviar solicitud' }
+              {state === "no encontrado" ? "Enviar invitación" : "Enviar solicitud"}
             </button>
           </div>
         </Form>
       )}
     </Formik>
-  )
-}
+  );
+};
 
 export default connect(null, { requestTransfer })(RequestForm);

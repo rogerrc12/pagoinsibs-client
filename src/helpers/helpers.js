@@ -1,3 +1,10 @@
+export function formatAmount(amount) {
+  return Number(amount).toLocaleString("es-ES", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
 // Toggle btn mobile nav
 export function toggleMobile(e, nav, header) {
   const btn = e.currentTarget;
@@ -36,7 +43,7 @@ export function closeMobileNav(e, btn) {
 export function togglePassword() {
   const inputPassword = document.getElementById("password");
   const inputConfirmPassword = document.getElementById("confirm_password");
-  const iconPassword = document.getElementById("password-icon");
+  const iconPassword = document.getElementById("password_icon");
   const iconConfirmPassword = document.getElementById("confirm_password_icon");
 
   if (inputPassword.type === "text") {
@@ -87,7 +94,7 @@ export function setCurrency(number) {
     maximumFractionDigits: 2,
   });
 
-  return formatter.format(number);
+  return formatter.format(+number);
 }
 
 // Set Credit Card years
