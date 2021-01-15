@@ -1,0 +1,29 @@
+@import "../../../../assets/css/variables.scss";
+
+.AccountInfo {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+
+  > div {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .AddAccount {
+    background-color: transparent;
+    color: $primary-color;
+
+    &:hover {
+      background-color: transparent;
+      color: $light-green;
+    }
+  }
+}
+
+.ExpirationContainer {
+  .InputGroup {
+    width: auto;
+    margin-top: 0;
+  }
+}

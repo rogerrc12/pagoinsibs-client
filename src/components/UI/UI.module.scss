@@ -1,0 +1,39 @@
+@import "../../assets/css/variables.scss";
+
+.CustomButton {
+  padding: 10px 30px;
+  background-color: #ddd;
+  color: $text-color;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  transition: 500ms ease-in-out;
+  cursor: pointer;
+  max-width: 500px;
+  margin: 10px 0;
+  font-weight: bold;
+
+  .Icon {
+    margin-right: 15px;
+    font-size: 1.4rem;
+  }
+}
+
+.CustomButton:hover {
+  background-color: $light-green;
+  opacity: 1;
+  color: #fff;
+}
+
+.CardContainer {
+  background-color: #fff;
+  border-radius: 10px;
+  width: 95%;
+  margin: 0 auto;
+  max-width: 40rem;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 2px 1px 10px rgba(0, 0, 0, 0.1);
+}

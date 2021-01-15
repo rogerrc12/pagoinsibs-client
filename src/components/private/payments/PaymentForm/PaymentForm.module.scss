@@ -1,0 +1,42 @@
+@import "../../../../assets/css/variables.scss";
+
+.Form {
+  width: 100%;
+
+  button {
+    color: #fff;
+    width: 100%;
+    max-width: 12rem;
+  }
+
+  label {
+    text-transform: uppercase;
+    color: $label-color;
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    text-align: left;
+
+    @media screen and (min-width: 768px) {
+      font-size: 0.85rem;
+    }
+  }
+
+  input[name="amount"] {
+    width: 80%;
+  }
+}
+
+.FormInputs {
+  padding: 25px;
+
+  @media screen and (min-width: 768px) {
+    padding: 25px 55px;
+  }
+}
+
+.CardForm {
+  padding: 10px 0;
+  max-width: 37rem;
+}
