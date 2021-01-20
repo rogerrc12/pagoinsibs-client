@@ -12,10 +12,11 @@ import { registerUser, setGoogleLogin } from "../../../store/actions";
 
 import RegisterDetails from "./RegisterDetails";
 import AccountDetails from "./AccountDetails";
+import Alert from "../../../components/UI/Alert";
 
 const pages = (props) => [<RegisterDetails {...props} />, <AccountDetails {...props} />];
 
-const Register = ({ auth: { isAuthenticated, user }, registerUser, setGoogleLogin, history }) => {
+const Register = ({ auth: { isAuthenticated, user, error }, registerUser, setGoogleLogin, history }) => {
   // steps of form
   const [step, setStep] = useState(0);
   const nextPage = () => setStep((prevState) => prevState + 1);
@@ -49,6 +50,7 @@ const Register = ({ auth: { isAuthenticated, user }, registerUser, setGoogleLogi
                 </header>
                 <div className='signup-form__container'>
                   {pages({ values, errors, touched })[step]}
+                  <Alert error={error} />
                   {step === pages().length - 1 ? (
                     <div className='continue-form'>
                       <button className='button submit-btn' type='submit'>

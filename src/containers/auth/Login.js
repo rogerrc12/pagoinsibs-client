@@ -10,11 +10,12 @@ import { loginUser, setGoogleLogin } from "../../store/actions";
 
 import Input from "../../components/UI/FormItems/Input";
 import Button from "../../components/UI/Button";
+import Alert from "../../components/UI/Alert";
 
 const Login = ({ loginUser, auth, setGoogleLogin, history, location }) => {
   let from;
 
-  const { isAuthenticated, isLoading } = auth;
+  const { isAuthenticated, isLoading, error } = auth;
 
   location.state ? (from = location.state.from) : (from = { pathname: "/dashboard" });
 
@@ -49,6 +50,8 @@ const Login = ({ loginUser, auth, setGoogleLogin, history, location }) => {
                 <Link to='/reset' className='pull-right'>
                   ¿Olvidó su Contraseña?
                 </Link>
+
+                <Alert error={error} />
 
                 <div className='sign-in__submit clearfix'>
                   <Button className={isLoading ? "running" : ""} disabled={!isValid || isLoading} type='submit'>

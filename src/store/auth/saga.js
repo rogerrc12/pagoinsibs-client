@@ -1,4 +1,4 @@
-import { all, takeLatest, call, put } from "redux-saga/effects";
+import { all, takeLatest, call, put, delay } from "redux-saga/effects";
 import * as actions from "./actions";
 import * as types from "./actionTypes";
 import axios from "../../helpers/axios";
@@ -14,19 +14,22 @@ function* loadUser() {
     const res = yield axios.get("/api/auth");
     if (res.status === 200) yield put(actions.loadUserSuccess(res.data));
   } catch (error) {
-    yield put(actions.apiError(error.message));
+    yield put(actions.apiError());
   }
 }
 
 function* loginUser(action) {
   try {
     const res = yield axios.post("/api/auth", action.values);
+
     if (res.status === 200) {
       yield put(actions.loginUserSuccess(res.data));
       yield call(loadUser);
     }
   } catch (error) {
-    yield put(actions.apiError(error.message));
+    yield put(actions.apiError(error.data ? error.data.message : error.message));
+    yield delay(3000);
+    yield put(actions.clearError());
   }
 }
 
@@ -39,7 +42,9 @@ function* registerUser(action) {
       yield call(loadUser);
     }
   } catch (error) {
-    yield put(actions.apiError(error.message));
+    yield put(actions.apiError(error.data ? error.data.message : error.message));
+    yield delay(3000);
+    yield put(actions.clearError());
   }
 }
 

@@ -24,6 +24,7 @@ export const DebitValues = {
   feeAmount: 0,
   startPaymentDate: null,
   accountId: "",
+  WithCurrencyConversion: false,
   terms: "",
 };
 
@@ -44,5 +45,6 @@ export const PaymentValues = {
   description: "",
   amount: "",
   accountId: "",
+  WithCurrencyConversion: false,
   terms: "",
 };

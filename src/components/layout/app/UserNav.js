@@ -71,13 +71,13 @@ const UserNav = ({ toggleNav, setToggleNav }) => {
 
           <li className='user-nav__item'>
             <NavLink to='/debits' activeClassName='active'>
-              <span className='fas fa-university'></span> Domiciliaciones
+              <span className='fas fa-university icon'></span> Domiciliaciones
             </NavLink>
           </li>
 
           <li className='user-nav__item'>
             <NavLink to='/accounts' activeClassName='active'>
-              <span className='fas fa-university icon'></span> Mis cuentas
+              <span className='fas fa-wallet icon'></span> Mis cuentas
             </NavLink>
           </li>
 

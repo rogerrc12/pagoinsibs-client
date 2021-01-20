@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Router } from "react-router-dom";
+import { LastLocationProvider } from "react-router-last-location";
 import MainApp from "./containers/MainApp";
 import moment from "moment";
 // Helpers
@@ -27,7 +28,9 @@ function App() {
   return (
     <Provider store={store}>
       <Router primary={false} history={history}>
-        <MainApp />
+        <LastLocationProvider>
+          <MainApp />
+        </LastLocationProvider>
       </Router>
     </Provider>
   );

@@ -22,7 +22,7 @@ const PaymentDetails = (props) => {
   const totalProductAmount = Number(amount) * (Number(interestRate) + 1);
   const [feeAmountInput, setFeeAmountInput] = useState(0);
   const [productAmount, setProductAmount] = useState(null);
-  const [conversionRate, setConversionRate] = useState(null);
+  const [conversionRate, setConversionRate] = useState(false);
 
   const { currencyId } = values;
 
@@ -32,17 +32,20 @@ const PaymentDetails = (props) => {
     if (currencyId === 1) setFieldValue("paymentType", "account");
   }, [totalProductAmount, setFieldValue, currencyId]);
 
+  console.log(totalProductAmount);
+
   const paymentFrequencyOptions = setPaymentFrequency(values.paymentPeriod, maxDebitMonths);
   const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
+  const dollarsCurrency = currencies.find((currency) => currency.id === 2);
 
   useEffect(() => {
     if (productInfo && productInfo.amount > 0) {
       const productCurrency = productInfo.currency.id;
-      let newAmount = +productInfo.amount;
+      let newAmount = totalProductAmount;
 
       if (values.currencyId !== productCurrency) {
-        newAmount = productCurrency === 1 ? +productInfo.amount / +currencyDetails.sellPrice : +productInfo.amount * +currencyDetails.buyPrice;
-        setConversionRate(`Tasa de conversión: ${productCurrency === 1 ? formatAmount(currencyDetails.sellPrice) : formatAmount(currencyDetails.buyPrice)}`);
+        newAmount = productCurrency === 1 ? totalProductAmount / +dollarsCurrency.sellPrice : totalProductAmount * +dollarsCurrency.buyPrice;
+        setConversionRate(true);
       }
       setProductAmount(newAmount);
       setFieldValue("totalAmount", productAmount);
@@ -104,11 +107,16 @@ const PaymentDetails = (props) => {
           disabled
           currency={currencyDetails.symbol}
         />
-        {conversionRate && <p style={{ textAlign: "left", fontSize: ".8rem" }}>{conversionRate}</p>}
+        {conversionRate && (
+          <p style={{ textAlign: "left", fontSize: ".8rem" }}>
+            Tasa de conversión actual: Bs. {productInfo.currency.id === 1 ? formatAmount(dollarsCurrency.sellPrice) : formatAmount(dollarsCurrency.buyPrice)}
+          </p>
+        )}
       </div>
+      {conversionRate && <span className='form-error'>El monto de tus cuotas pendientes se actualizará según cambio de tasa en el banco central.</span>}
 
       <div className='col-12'>
-        <div className='form-group mt-4'>
+        <div className='form-group mt-2'>
           <label>¿Comó serán tus pagos?</label>
         </div>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import CustomSelect from "../../../UI/FormItems/CustomSelect";
 // REDUX
@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as actions from "../../../../store/actions";
 
 const SupplierDetails = (props) => {
-  const { getSuppliers, getProducts, getProductInfo, productInfo, suppliers, products, getSupplierProfile, nextPage, currencies, values } = props;
+  const { getSuppliers, getProducts, getProductInfo, productInfo, suppliers, products, getSupplierProfile, nextPage, currencies, values, setFieldValue } = props;
 
   // product type options
   const productTypes = [
@@ -20,6 +20,13 @@ const SupplierDetails = (props) => {
   const { supplierId, supplierType, productId, currencyId } = values;
 
   const buttonValidation = !supplierId || !supplierType || !productId || !currencyId || (currencyId && productInfo.currencyId !== currencyId && !productInfo.currencyConversion);
+
+  useEffect(() => {
+    if (productInfo && productInfo.currencyConversion) {
+      productInfo.currencyId !== currencyId ? setFieldValue("withCurrencyConversion", true) : setFieldValue("withCurrencyConversion", false);
+    }
+    // eslint-disable-next-line
+  }, [currencyId]);
 
   return (
     <div className='row'>

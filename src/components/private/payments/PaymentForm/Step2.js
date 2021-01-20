@@ -17,12 +17,13 @@ import { showModal } from "../../../../store/actions/modal";
 import { getAccountInfoInit } from "../../../../store/actions";
 
 const UserDetails = (props) => {
-  const { getAccountInfoInit, productInfo, accounts, showModal, prevPage, nextPage, setFieldValue, currencies, values } = props;
+  const { getAccountInfoInit, productInfo, accounts, showModal, prevPage, paymentForm, nextPage, setFieldValue, currencies, values } = props;
   const { accountId, description, amount, paymentType, productId } = values;
   const [productAmount, setProductAmount] = useState(null);
-  const [conversionRate, setConversionRate] = useState(null);
+  const [conversionRate, setConversionRate] = useState(false);
 
   const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
+  const dollarsCurrency = currencies.find((currency) => currency.id === 2);
 
   useEffect(() => {
     if (productInfo && productInfo.amount > 0) {
@@ -30,8 +31,8 @@ const UserDetails = (props) => {
       let newAmount = +productInfo.amount;
 
       if (values.currencyId !== productCurrency) {
-        newAmount = productCurrency === 1 ? +productInfo.amount / +currencyDetails.sellPrice : +productInfo.amount * +currencyDetails.buyPrice;
-        setConversionRate(`Tasa de conversión: ${productCurrency === 1 ? formatAmount(currencyDetails.sellPrice) : formatAmount(currencyDetails.buyPrice)}`);
+        newAmount = productCurrency === 1 ? +productInfo.amount / +dollarsCurrency.sellPrice : +productInfo.amount * +dollarsCurrency.buyPrice;
+        setConversionRate(true);
       }
       setProductAmount(newAmount);
       setFieldValue("amount", productAmount);
@@ -51,6 +52,17 @@ const UserDetails = (props) => {
   const onAmountChange = (value, field, form) => form.setFieldValue(field.name, +value);
 
   let buttonValidation = true;
+
+  let numberInputOptions = {
+    numeral: true,
+    numeralPositiveOnly: true,
+    stripLeadingZeroes: true,
+    numeralThousandsGroupStyle: "thousand",
+  };
+
+  if (paymentForm === "product") {
+    numberInputOptions = { numeralThousandsGroupStyle: "thousand", delimiter: ".", numeral: true, numeralPositiveOnly: true, stripLeadingZeroes: true };
+  }
 
   if (paymentType === "account") buttonValidation = !accountId;
   else if (paymentType === "card") buttonValidation = !values.cardName || !values.cardCedula || !values.cardNumber || !values.cardMonth || !values.cardYear || !values.cardCvc;
@@ -81,17 +93,17 @@ const UserDetails = (props) => {
         <NumberInput
           label='Monto a pagar'
           name='amount'
-          value={props.paymentForm === "product" && productAmount ? productAmount : 0}
-          options={{
-            numeral: true,
-            numeralPositiveOnly: true,
-            stripLeadingZeroes: true,
-          }}
+          value={props.paymentForm === "product" && productAmount ? productAmount.toFixed(2) : 0}
+          options={numberInputOptions}
           disabled={productId}
           onChange={onAmountChange}
           currency={currencyDetails.symbol}
         />
-        {conversionRate && <p style={{ textAlign: "left", fontSize: ".8rem" }}>{conversionRate}</p>}
+        {conversionRate && (
+          <p style={{ textAlign: "left", fontSize: ".8rem" }}>
+            Tasa de conversión: Bs. {productInfo.currency.id === 1 ? formatAmount(dollarsCurrency.sellPrice) : formatAmount(dollarsCurrency.buyPrice)}
+          </p>
+        )}
       </div>
 
       <div className='col-12'>

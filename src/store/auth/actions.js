@@ -30,6 +30,10 @@ export const loginUserSuccess = (data) => ({
   payload: data,
 });
 
+export const clearError = () => ({
+  type: actionTypes.CLEAR_ERROR,
+});
+
 export const apiError = (msg) => ({
   type: actionTypes.API_ERROR,
   payload: msg,
@@ -112,21 +116,3 @@ export const logoutSuccess = () => ({
 export const clearUserData = () => ({
   type: actionTypes.CLEAR_USER_DATA,
 });
-
-// // Get user info by pay id
-// export const getUserInfoByPayId = (pay_id) => async (dispatch) => {
-//   //   try {
-//   //     const res = await axios.get(`/api/users/transfer-to/${pay_id}`);
-//   //     return dispatch({ type: actionTypes.GET_RECEIVER_INFO, payload: res.data });
-//   //   } catch (error) {
-//   //     const errors = error.response.data.errors;
-//   //     if (errors) {
-//   //       if (errors[0].msg.includes("Token")) {
-//   //         dispatch(timeOut());
-//   //       } else {
-//   //         dispatch(setAlert(errors[0].msg, "error"));
-//   //       }
-//   //     }
-//   //     return dispatch({ type: actionTypes.GET_RECEIVER_INFO_ERROR });
-//   //   }
-// };
