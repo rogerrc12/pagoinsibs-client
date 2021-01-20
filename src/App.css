@@ -446,9 +446,8 @@ table caption {
 }
 
 .status .cancelado,
-.status.cancelado,
-.status .vencido,
-.status.vencido {
+.status.fallido,
+.status .vencido {
   background-color: #ff4444;
 }
 
