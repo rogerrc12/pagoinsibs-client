@@ -32,8 +32,6 @@ const PaymentDetails = (props) => {
     if (currencyId === 1) setFieldValue("paymentType", "account");
   }, [totalProductAmount, setFieldValue, currencyId]);
 
-  console.log(totalProductAmount);
-
   const paymentFrequencyOptions = setPaymentFrequency(values.paymentPeriod, maxDebitMonths);
   const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
   const dollarsCurrency = currencies.find((currency) => currency.id === 2);
@@ -96,7 +94,7 @@ const PaymentDetails = (props) => {
         <NumberInput
           label='Monto a pagar'
           name='totalAmount'
-          value={values.totalAmount}
+          value={values.totalAmount ? values.totalAmount.toFixed(2) : ""}
           options={{
             numeral: true,
             numeralThousandsGroupStyle: "thousand",
@@ -113,7 +111,9 @@ const PaymentDetails = (props) => {
           </p>
         )}
       </div>
-      {conversionRate && <span className='form-error'>El monto de tus cuotas pendientes se actualizará según cambio de tasa en el banco central.</span>}
+      {conversionRate && productInfo.currency.id !== 1 && (
+        <span className='form-error'>El monto en bolívares de tus cuotas pendientes se actualizará según cambio de tasa en el banco central y en nuestra plataforma.</span>
+      )}
 
       <div className='col-12'>
         <div className='form-group mt-2'>

@@ -636,11 +636,13 @@ main {
 
 .main-logo img {
   width: 7rem;
+  margin-right: 3rem;
 }
 
 @media screen and (min-width: 48rem) {
   .main-header {
     padding: auto 2rem;
+    justify-content: center;
   }
 
   .main-logo img {
@@ -2252,6 +2254,33 @@ a.mobile-nav__btn {
   font-weight: bold;
 }
 
+.payment-steps {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.payment-steps li {
+  font-size: 0.9rem;
+}
+
+.dropzone-container {
+  padding: 1.5rem;
+  text-align: center;
+  border: 2px dashed #888;
+  margin: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 250ms ease-in-out;
+}
+
+.dropzone-container:hover {
+  opacity: 0.6;
+}
+
+.dropzone-container p {
+  margin: 0;
+}
+
 .transactions-container .MuiTabs-flexContainer .transfers-button .fab {
   color: #37ce7b;
 }
@@ -2467,7 +2496,7 @@ h2.table-heading {
 }
 
 .detail-section {
-  max-width: 35rem;
+  max-width: 40rem;
   width: 95%;
   margin: 0 auto;
   background: var(--green-light);
@@ -2624,6 +2653,11 @@ a.back-title:focus span {
 
 .detail-right {
   opacity: 0.8;
+}
+
+.detail-right img {
+  max-width: 5rem;
+  cursor: pointer;
 }
 
 .detail-fee__badge {

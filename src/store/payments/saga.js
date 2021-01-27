@@ -42,9 +42,27 @@ function* getDebitDetails({ id }) {
   }
 }
 
-function* createPayment(action) {
+function* createPayment({ values }) {
+  const formData = new FormData();
+
+  formData.append("description", values.description);
+  formData.append("amount", values.amount);
+  formData.append("supplierId", values.supplierId);
+  formData.append("accountId", values.accountId);
+  formData.append("paymentType", values.paymentType);
+  formData.append("productId", values.productId);
+  formData.append("currencyId", values.currencyId);
+  formData.append("cardNumber", values.cardNumber);
+  formData.append("paypalEmail", values.paypalEmail);
+  formData.append("paypalPaymentId", values.paypalPaymentId);
+  formData.append("withCurrencyConversion", values.withCurrencyConversion);
+
+  if (values.zelleFile) {
+    formData.append("zelleFile", values.zelleFile);
+  }
+
   try {
-    const res = yield axios.post("/api/payments", action.values, { headers: { "Content-Type": "application/json" } });
+    const res = yield axios.post("/api/payments", formData);
     if (res.status === 200) {
       yield call(
         [Swal, "fire"],

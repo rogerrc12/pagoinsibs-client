@@ -17,41 +17,12 @@ export const UserHeader = ({
 
   const headerTitle = () => {
     let title;
-    switch (pathname) {
-      case "/dashboard":
-        title = "Actividad";
-        break;
-      case "/profile":
-        title = "Mi perfil";
-        break;
-      case "/accounts":
-        title = "Mis cuentas";
-        break;
-      case "/transfers":
-        title = "Transferencias";
-        break;
-      case "/transfers/transfer-to":
-        title = "Envío a terceros";
-        break;
-      case "/transfers/request-transfer":
-        title = "Solicitud de dinero";
-        break;
-      case "/payments":
-        title = "Realizar pagos";
-        break;
-      case "/payments/account":
-        title = "Pago con cuenta";
-        break;
-      case "/payments/credit-card":
-        title = "Pago con tarjeta";
-        break;
-      case "/payments/direct-debit":
-        title = "Pagos automáticos";
-        break;
-      default:
-        title = "";
-    }
 
+    if (pathname.includes("payments")) title = "Pagos únicos";
+    if (pathname.includes("debits")) title = "Domiciliaciones";
+    if (pathname.includes("accounts")) title = "Cuentas bancarias";
+    if (pathname.includes("profile")) title = "Mi perfil";
+    if (pathname.includes("dashboard")) title = "Actividad";
     if (pathname.includes("detail")) title = "Detalle de transacción";
 
     return title;

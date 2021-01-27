@@ -18,16 +18,16 @@ const PaymentDetail = ({ getPaymentDetailsInit, details, match, sendPaymentDetai
   // detail sent status
   const [sent, setSent] = useState(false);
 
-  const detailsList = details.paymentType && (
+  const detailsList = (
     <>
       <li className='detail-item detail-status'>
-        <span className={`detail-right status ${details.status.name}`}>{details.status.name}</span>
+        <span className={`detail-right status ${details.status && details.status.name}`}>{details.status && details.status.name}</span>
       </li>
       <li className='detail-item'>
         <span className='detail-left'>Forma de pago:</span>
         <span className='detail-right'>{details.paymentType}</span>
       </li>
-      {details.paymentType === "account" ? (
+      {details.paymentType === "account" && (
         <>
           <li className='detail-item'>
             <span className='detail-left'>Banco debitado:</span>
@@ -42,15 +42,35 @@ const PaymentDetail = ({ getPaymentDetailsInit, details, match, sendPaymentDetai
             <span className='detail-right'>{details.accType}</span>
           </li>
         </>
-      ) : details.paymentType === "card" ? (
+      )}
+      {details.paymentType === "card" && (
         <li className='detail-item'>
           <span className='detail-left'>Tarjeta</span>
           <span className='detail-right'>{details.cardBrand + " " + details.cardLastNumbers}</span>
         </li>
-      ) : (
+      )}
+
+      {details.paymentType === "paypal" && (
         <li className='detail-item'>
           <span className='detail-left'>Correo de pago:</span>
-          <span className='detail-right'>{details.zelleEmail || details.paypalEmail}</span>
+          <span className='detail-right'>{details.paypalEmail}</span>
+        </li>
+      )}
+      {details.paypalPaymentId && (
+        <li className='detail-item'>
+          <span className='detail-left'>ID de pago de:</span>
+          <span className='detail-right'>{details.paypalPaymentId}</span>
+        </li>
+      )}
+
+      {details.zelleFileUrl && (
+        <li className='detail-item'>
+          <span className='detail-left'>Captura de pago:</span>
+          <div className='detail-right'>
+            <a href={details.zelleFileUrl} target='_blank' rel='noopener noreferrer'>
+              <img src={details.zelleFileUrl} alt='Captura de pago zelle' />
+            </a>
+          </div>
         </li>
       )}
     </>
@@ -97,11 +117,11 @@ const DetailHeader = ({ details, skeleton }) => (
         </span>
         <h2>Pago #{details.id}</h2>
         <span className='detail-header__price'>
-          {setCurrency(details.amount)} {details.currency.symbol}
+          {setCurrency(details.amount)} {details.currency && details.currency.symbol}
         </span>
         <p>{details.description}</p>
-        <h3>{details.supplier.name}</h3>
-        <p>{details.supplier.rif}</p>
+        <h3>{details.supplier && details.supplier.name}</h3>
+        <p>{details.supplier && details.supplier.rif}</p>
       </>
     )}
   </header>

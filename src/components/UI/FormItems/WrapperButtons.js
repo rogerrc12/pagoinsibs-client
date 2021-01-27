@@ -2,10 +2,10 @@ import React from "react";
 
 const WrapperButtons = (props) => {
   return (
-    <div className='continue-form col-12 mx-auto mt-4'>
+    <div className='continue-form col-12 mx-auto mt-2'>
       {props.submitButton ? (
         <button type='submit' className='continue-btn button' disabled={props.disabled}>
-          Confirmar pago
+          Completar pago
         </button>
       ) : (
         <button type={props.type} className='continue-btn button' disabled={props.disabled} onClick={props.nextPage}>

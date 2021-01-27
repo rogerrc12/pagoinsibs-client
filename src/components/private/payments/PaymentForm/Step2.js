@@ -7,9 +7,7 @@ import Input from "../../../UI/FormItems/Input";
 import NumberInput from "../../../UI/FormItems/NumberInput";
 import Account from "../Options/Account";
 import CreditCard from "../Options/CreditCard";
-import Paypal from "../Options/Paypal";
 import Zelle from "../Options/Zelle";
-
 import WrapperButtons from "../../../UI/FormItems/WrapperButtons";
 // REDUX
 import { connect } from "react-redux";
@@ -51,8 +49,6 @@ const UserDetails = (props) => {
 
   const onAmountChange = (value, field, form) => form.setFieldValue(field.name, +value);
 
-  let buttonValidation = true;
-
   let numberInputOptions = {
     numeral: true,
     numeralPositiveOnly: true,
@@ -64,15 +60,13 @@ const UserDetails = (props) => {
     numberInputOptions = { numeralThousandsGroupStyle: "thousand", delimiter: ".", numeral: true, numeralPositiveOnly: true, stripLeadingZeroes: true };
   }
 
+  let buttonValidation;
+
   if (paymentType === "account") buttonValidation = !accountId;
   else if (paymentType === "card") buttonValidation = !values.cardName || !values.cardCedula || !values.cardNumber || !values.cardMonth || !values.cardYear || !values.cardCvc;
-  else if (paymentType === "zelle") buttonValidation = !values.zelleEmail;
-  else if (paymentType === "paypal") buttonValidation = !values.paypalEmail;
+  else if (paymentType === "zelle") buttonValidation = !values.zelleFile;
 
-  const resetDollarValues = () => {
-    setFieldValue("zelleEmail", "");
-    setFieldValue("paypalEmail", "");
-  };
+  const resetDollarValues = () => setFieldValue("zelleEmail", "");
 
   const resetBsValues = () => {
     setFieldValue("accountId", "");
@@ -150,7 +144,7 @@ const UserDetails = (props) => {
         <PaymentOption type={paymentType} values={values} setFieldValue={setFieldValue} errors={props.errors} touched={props.touched} />
       )}
 
-      <WrapperButtons type='button' disabled={!description || !amount || buttonValidation} prevPage={prevPage} nextPage={nextPage} />
+      <WrapperButtons type='button' disabled={!description || !amount || !paymentType || buttonValidation} prevPage={prevPage} nextPage={nextPage} />
 
       <Modal>
         <AccountForm />
@@ -164,10 +158,8 @@ const PaymentOption = (props) => {
 
   if (props.type === "card") {
     option = <CreditCard setValue={props.setFieldValue} values={props.values} errors={props.errors} touched={props.touched} />;
-  } else if (props.type === "paypal") {
-    option = <Paypal />;
   } else if (props.type === "zelle") {
-    option = <Zelle />;
+    option = <Zelle setValue={props.setFieldValue} value={props.values.zelleFile} />;
   }
 
   return option;

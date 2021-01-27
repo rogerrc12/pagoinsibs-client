@@ -99,10 +99,7 @@ export const PaymentValidation = (type) =>
       is: "card",
       then: Yup.string()
         .required("Debes colocar un número de tarjeta.")
-        .matches(
-          /^((4\d{3})|(5[1-5]\d{2})|(6011)|(34\d{1})|(37\d{1}))-?\s?\d{4}-?\s?\d{4}-?\s?\d{4}|3[4,7][\d\s-]{15}$/,
-          "Debes colocar un número válido."
-        ),
+        .matches(/^((4\d{3})|(5[1-5]\d{2})|(6011)|(34\d{1})|(37\d{1}))-?\s?\d{4}-?\s?\d{4}-?\s?\d{4}|3[4,7][\d\s-]{15}$/, "Debes colocar un número válido."),
       otherwise: Yup.string().notRequired(),
     }),
     cardCedula: Yup.string().when("paymentType", {
