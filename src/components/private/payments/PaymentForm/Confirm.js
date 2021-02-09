@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import creditCardType, { types as CardType } from "credit-card-type";
 import { formatAmount } from "../../../../helpers/helpers";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 import VisaIcon from "../../../../assets/icons/visa.svg";
 import MasterIcon from "../../../../assets/icons/mastercard.svg";
@@ -12,24 +13,19 @@ import WrapperButtons from "../../../UI/FormItems/WrapperButtons";
 // CONNECT
 import { connect } from "react-redux";
 
-const Confirm = ({ profile, accountInfo, values, isValid, prevPage, currencies, setFieldValue }) => {
+const Confirm = ({ profile, accountInfo, values, isValid, prevPage, currencies, createPayment }) => {
   const [checkout, setCheckout] = useState(false);
   const [paypalCompleted, setPaypalCompleted] = useState(false);
   const [paypalError, setPaypalError] = useState(false);
 
+  const { isProcessing } = useSelector((state) => state.Payments);
   const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
 
   const { terms } = values;
 
   const onPaypalApprove = async (data, actions) => {
     const order = await actions.order.capture();
-    if (order.status.toLowerCase() === "completed") {
-      setPaypalCompleted(true);
-      Swal.fire("Recibido", "La operación fue recibida correctamente, ya puedes completar tu pago.", "success");
-      setFieldValue("paypalPaymentId", order.id);
-      setFieldValue("paypalEmail", order.payer.email_address);
-      setCheckout(false);
-    }
+    if (order.status.toLowerCase() === "completed") createPayment(values, order.id, order.payer.email_address);
   };
 
   const onPaypalError = (error) => {
@@ -74,7 +70,7 @@ const Confirm = ({ profile, accountInfo, values, isValid, prevPage, currencies, 
       <Checkbox name='terms' label='Confirmo y acepto que los datos mostrados son correcto.' />
       {checkout && values.paymentType === "paypal" && <PaypalButton onApprove={onPaypalApprove} onError={onPaypalError} amount={+values.amount} description={values.description} />}
       <p>{paypalError}</p>
-      <WrapperButtons type='button' disabled={buttonValidation} prevPage={prevPage} submitButton />
+      <WrapperButtons type='button' disabled={buttonValidation} isProcessing={isProcessing} prevPage={prevPage} submitButton />
     </div>
   );
 };

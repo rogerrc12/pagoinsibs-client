@@ -45,6 +45,6 @@ export const PaymentValues = {
   description: "",
   amount: "",
   accountId: "",
-  WithCurrencyConversion: false,
+  withCurrencyConversion: false,
   terms: "",
 };

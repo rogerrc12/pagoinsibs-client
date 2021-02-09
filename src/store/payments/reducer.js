@@ -7,12 +7,19 @@ const initialState = {
   debitDetails: {},
   error: "",
   isLoading: true,
+  isProcessing: false,
 };
 
 export default function(state = initialState, action = {}) {
   const { type } = action;
 
   switch (type) {
+    case types.CREATE_PAYMENT_INIT:
+      return { ...state, isProcessing: true };
+
+    case types.CREATE_PAYMENT_SUCCESS:
+      return { ...state, isProcessing: false };
+
     case types.GET_PAYMENTS_SUCCESS:
       return { ...state, payments: action.payments, isLoading: false };
 

@@ -38,9 +38,11 @@ export const getDebitDetailsSuccess = (details) => ({
   details,
 });
 
-export const createPaymentInit = (values) => ({
+export const createPaymentInit = (values, paymentId, paypalEmail) => ({
   type: actionTypes.CREATE_PAYMENT_INIT,
   values,
+  paymentId,
+  paypalEmail,
 });
 
 export const createPaymentSuccess = () => ({

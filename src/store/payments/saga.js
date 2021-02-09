@@ -42,7 +42,7 @@ function* getDebitDetails({ id }) {
   }
 }
 
-function* createPayment({ values }) {
+function* createPayment({ values, paymentId, paypalEmail }) {
   const formData = new FormData();
 
   formData.append("description", values.description);
@@ -53,8 +53,8 @@ function* createPayment({ values }) {
   formData.append("productId", values.productId);
   formData.append("currencyId", values.currencyId);
   formData.append("cardNumber", values.cardNumber);
-  formData.append("paypalEmail", values.paypalEmail);
-  formData.append("paypalPaymentId", values.paypalPaymentId);
+  formData.append("paypalEmail", paypalEmail);
+  formData.append("paypalPaymentId", paymentId);
   formData.append("withCurrencyConversion", values.withCurrencyConversion);
 
   if (values.zelleFile) {
@@ -67,7 +67,7 @@ function* createPayment({ values }) {
       yield call(
         [Swal, "fire"],
         "Solicitud recibida",
-        "Tu solicitud de cobro ha sido recibida, y pronto estaremos en contacto. Puedes ver tu correo para más información.",
+        "Tu solicitud de pago ha sido recibida, y pronto estaremos en contacto. Puedes ver tu correo para más información.",
         "success"
       );
       yield put(actions.createPaymentSuccess());

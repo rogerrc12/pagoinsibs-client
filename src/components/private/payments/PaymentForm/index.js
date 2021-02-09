@@ -43,7 +43,7 @@ const AccountForm = ({ createPayment, currencies, paymentForm }) => {
                 </p>
               </header>
             )}
-            <div className={classes.FormInputs}>{pages({ values, setFieldValue, nextPage, prevPage, touched, errors, isValid, currencies, paymentForm })[step]}</div>
+            <div className={classes.FormInputs}>{pages({ values, setFieldValue, nextPage, prevPage, touched, errors, isValid, currencies, paymentForm, createPayment })[step]}</div>
           </Form>
         )}
       </Formik>
