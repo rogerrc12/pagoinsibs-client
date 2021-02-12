@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { setCurrency } from "../../../../helpers/helpers";
 // CONNECT
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 import WrapperButtons from "../../../UI/FormItems/WrapperButtons";
 import Checkbox from "../../../UI/FormItems/Checkbox";
 
-const Confirm = ({ values, profile, currencies, accountInfo, productInfo, prevPage }) => {
+const Confirm = ({ values, profile, currencies, accountInfo, productInfo, prevPage, isValid }) => {
   const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
+  const { isProcessing } = useSelector((state) => state.Payments);
 
   return (
     <div className='form-confirmation'>
@@ -33,7 +34,7 @@ const Confirm = ({ values, profile, currencies, accountInfo, productInfo, prevPa
       </div>
       <div className='form-details'>
         <span className='form-detail-left'>{values.debitType === "recurrente" ? "Monto por cuota:" : "Monto a domiciliar:"}</span>
-        <span className='form-detail-right'>{setCurrency(values.totalAmount) + " " + currencyDetails.symbol}</span>
+        <span className='form-detail-right'>{setCurrency(values.amount) + " " + currencyDetails.symbol}</span>
       </div>
       <div className='form-details'>
         <span className='form-detail-left'>¿Como pagarás?:</span>
@@ -71,7 +72,15 @@ const Confirm = ({ values, profile, currencies, accountInfo, productInfo, prevPa
 
       <Checkbox name='terms' label='Confirmo que todos los datos mostrados son los correctos.' />
 
-      <WrapperButtons type='button' prevPage={prevPage} submitButton />
+      <div className='continue-form col-12 mx-auto mt-2'>
+        <button type='submit' className={`continue-btn button ld-ext-right ${isProcessing ? "running" : ""}`} disabled={!isValid || isProcessing}>
+          <div className='ld ld-spin ld-ring' />
+          Completar pago
+        </button>
+        <button type='button' className='previous-btn button' onClick={prevPage}>
+          ir atrás
+        </button>
+      </div>
     </div>
   );
 };

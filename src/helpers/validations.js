@@ -53,7 +53,7 @@ export const DebitValidation = Yup.object().shape({
   productId: Yup.number().required("Elge un producto."),
   currencyId: Yup.number().required("Debes seleccionar la moneda de pago."),
   description: Yup.string().required("Debes agregar una descripción."),
-  totalAmount: Yup.number().required("Selecciona un producto correcto."),
+  amount: Yup.number().required("Selecciona un producto correcto."),
   paymentType: Yup.string().required("Debes seleccionar una forma de pago."),
   debitType: Yup.string().required("Debes elegir un tipo de domiciliación."),
   paymentPeriod: Yup.string().when("debitType", {

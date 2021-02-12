@@ -17,7 +17,7 @@ export const DebitValues = {
   currencyId: "",
   paymentType: "",
   description: "",
-  totalAmount: "",
+  amount: "",
   debitType: "",
   paymentPeriod: "",
   paymentFrequency: 0,

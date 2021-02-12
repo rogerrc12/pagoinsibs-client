@@ -5,7 +5,7 @@ const WrapperButtons = (props) => {
     <div className='continue-form col-12 mx-auto mt-2'>
       {props.submitButton ? (
         <button type='submit' className={`continue-btn button ld-ext-right ${props.isProcessing ? "running" : ""}`} disabled={props.disabled || props.isProcessing}>
-          <div class='ld ld-spin ld-ring' />
+          <div className='ld ld-spin ld-ring' />
           Completar pago
         </button>
       ) : (

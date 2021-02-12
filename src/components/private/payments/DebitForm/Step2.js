@@ -28,7 +28,7 @@ const PaymentDetails = (props) => {
 
   // set minimum amount based on product amount (check SupplierDetails select for product)
   useEffect(() => {
-    setFieldValue("totalAmount", totalProductAmount);
+    setFieldValue("amount", totalProductAmount);
     if (currencyId === 1) setFieldValue("paymentType", "account");
   }, [totalProductAmount, setFieldValue, currencyId]);
 
@@ -46,9 +46,9 @@ const PaymentDetails = (props) => {
         setConversionRate(true);
       }
       setProductAmount(newAmount);
-      setFieldValue("totalAmount", productAmount);
+      setFieldValue("amount", productAmount);
     } else {
-      setFieldValue("totalAmount", totalProductAmount);
+      setFieldValue("amount", totalProductAmount);
     }
     // eslint-disable-next-line
   }, [currencies, productAmount, productInfo, setFieldValue]);
@@ -93,8 +93,8 @@ const PaymentDetails = (props) => {
       <div className='col-sm-6 col-10'>
         <NumberInput
           label='Monto a pagar'
-          name='totalAmount'
-          value={values.totalAmount ? values.totalAmount.toFixed(2) : ""}
+          name='amount'
+          value={values.amount ? values.amount.toFixed(2) : ""}
           options={{
             numeral: true,
             numeralThousandsGroupStyle: "thousand",

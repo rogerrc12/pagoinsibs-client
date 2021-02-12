@@ -27,7 +27,6 @@ const DetailFees = ({ detail }) => {
                 )}
               </span>
             </p>
-            {console.log(detail.details)}
             <span className='detail-right'>{setCurrency(detail.details.feeAmount) + " " + detail.details.currency.symbol}</span>
           </li>
         ))}

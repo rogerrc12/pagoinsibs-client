@@ -27,6 +27,12 @@ const PaymentDetail = ({ getPaymentDetailsInit, details, match, sendPaymentDetai
         <span className='detail-left'>Forma de pago:</span>
         <span className='detail-right'>{details.paymentType}</span>
       </li>
+      {details.productId && (
+        <li className='detail-item'>
+          <span className='detail-left'>Producto a pagar:</span>
+          <span className='detail-right'>{details.product.name}</span>
+        </li>
+      )}
       {details.paymentType === "account" && (
         <>
           <li className='detail-item'>

@@ -50,7 +50,7 @@ const DebitsTable = ({ debits }) => {
               <TableCell component='th' scope='row'>
                 <Link to={`/debit-details/${debit.id}`}>{debit.product.name.substring(0, 30) + "..."}</Link>
               </TableCell>
-              <TableCell>{setCurrency(debit.totalAmount) + " " + debit.currency.symbol}</TableCell>
+              <TableCell>{setCurrency(debit.amount) + " " + debit.currency.symbol}</TableCell>
               <TableCell>
                 <Moment format='DD/MM/YYYY'>{debit.createdAt}</Moment>
               </TableCell>

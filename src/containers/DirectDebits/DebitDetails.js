@@ -60,7 +60,7 @@ const DetailHeader = ({ details, skeleton }) => (
           <Moment format='DD MMM YYYY, h:mm a'>{details.createdAt}</Moment>
         </span>
         <h2>Domiciliación #{details.id}</h2>
-        <span className='detail-header__price'>{setCurrency(details.feeTotalAmount) + " " + details.currency.symbol}</span>
+        <span className='detail-header__price'>{setCurrency(details.amount) + " " + details.currency.symbol}</span>
         <p>{details.description}</p>
         <h3>{details.supplier.name}</h3>
         <p>{details.supplier.rif}</p>

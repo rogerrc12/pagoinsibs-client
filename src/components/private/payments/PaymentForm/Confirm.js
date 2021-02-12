@@ -13,12 +13,13 @@ import WrapperButtons from "../../../UI/FormItems/WrapperButtons";
 // CONNECT
 import { connect } from "react-redux";
 
-const Confirm = ({ profile, accountInfo, values, isValid, prevPage, currencies, createPayment }) => {
+const Confirm = ({ profile, accountInfo, paymentForm, values, isValid, prevPage, currencies, createPayment }) => {
   const [checkout, setCheckout] = useState(false);
   const [paypalCompleted, setPaypalCompleted] = useState(false);
   const [paypalError, setPaypalError] = useState(false);
 
   const { isProcessing } = useSelector((state) => state.Payments);
+  const productInfo = useSelector((state) => state.Suppliers.productInfo);
   const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
 
   const { terms } = values;
@@ -52,6 +53,12 @@ const Confirm = ({ profile, accountInfo, values, isValid, prevPage, currencies, 
         <span className='form-detail-left'>RIF:</span>
         <span className='form-detail-right'>{profile.rif}</span>
       </div>
+      {paymentForm === "product" && productInfo && (
+        <div className='form-details'>
+          <span className='form-detail-left'>Producto a pagar:</span>
+          <span className='form-detail-right'>{productInfo.name}</span>
+        </div>
+      )}
       <div className='form-details'>
         <span className='form-detail-left'>Descripción:</span>
         <span className='form-detail-right'>{values.description}</span>
