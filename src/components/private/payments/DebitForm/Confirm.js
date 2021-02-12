@@ -5,7 +5,6 @@ import { setCurrency } from "../../../../helpers/helpers";
 // CONNECT
 import { connect, useSelector } from "react-redux";
 
-import WrapperButtons from "../../../UI/FormItems/WrapperButtons";
 import Checkbox from "../../../UI/FormItems/Checkbox";
 
 const Confirm = ({ values, profile, currencies, accountInfo, productInfo, prevPage, isValid }) => {
