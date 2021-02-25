@@ -52,7 +52,12 @@ function* createPayment({ values, paymentId, paypalEmail }) {
   formData.append("paymentType", values.paymentType);
   formData.append("productId", values.productId);
   formData.append("currencyId", values.currencyId);
+  formData.append("cardName", values.cardName);
   formData.append("cardNumber", values.cardNumber);
+  formData.append("cardCedula", values.cardCedula);
+  formData.append("cardMonth", values.cardMonth);
+  formData.append("cardYear", values.cardYear);
+  formData.append("cardCvc", values.cardCvc);
   formData.append("paypalEmail", paypalEmail);
   formData.append("paypalPaymentId", paymentId);
   formData.append("withCurrencyConversion", values.withCurrencyConversion);

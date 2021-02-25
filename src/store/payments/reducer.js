@@ -15,9 +15,11 @@ export default function(state = initialState, action = {}) {
 
   switch (type) {
     case types.CREATE_PAYMENT_INIT:
+    case types.CREATE_DEBIT_INIT:
       return { ...state, isProcessing: true };
 
     case types.CREATE_PAYMENT_SUCCESS:
+    case types.CREATE_DEBIT_SUCCESS:
       return { ...state, isProcessing: false };
 
     case types.GET_PAYMENTS_SUCCESS:
@@ -33,7 +35,7 @@ export default function(state = initialState, action = {}) {
       return { ...state, debitDetails: action.details, isLoading: false };
 
     case types.API_ERROR:
-      return { ...state, error: action.msg, isLoading: false };
+      return { ...state, error: action.msg, isLoading: false, isProcessing: false };
 
     default:
       return state;

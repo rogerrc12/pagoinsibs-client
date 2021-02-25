@@ -18,6 +18,8 @@ const PaymentDetail = ({ getPaymentDetailsInit, details, match, sendPaymentDetai
   // detail sent status
   const [sent, setSent] = useState(false);
 
+  console.log(details);
+
   const detailsList = (
     <>
       <li className='detail-item detail-status'>
@@ -26,6 +28,10 @@ const PaymentDetail = ({ getPaymentDetailsInit, details, match, sendPaymentDetai
       <li className='detail-item'>
         <span className='detail-left'>Forma de pago:</span>
         <span className='detail-right'>{details.paymentType}</span>
+      </li>
+      <li className='detail-item'>
+        <span className='detail-left'>Empresa que recibe:</span>
+        <span className='detail-right'>{details.supplier && details.supplier.name.toLowerCase()}</span>
       </li>
       {details.productId && (
         <li className='detail-item'>
