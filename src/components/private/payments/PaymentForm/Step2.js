@@ -21,7 +21,7 @@ const UserDetails = (props) => {
   const [conversionRate, setConversionRate] = useState(false);
 
   const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
-  const dollarsCurrency = currencies.find((currency) => currency.id === 2);
+  const currencyRates = currencies.find((currency) => currency.id === 2);
 
   useEffect(() => {
     if (productInfo && productInfo.amount > 0) {
@@ -29,7 +29,7 @@ const UserDetails = (props) => {
       let newAmount = +productInfo.amount;
 
       if (values.currencyId !== productCurrency) {
-        newAmount = productCurrency === 1 ? +productInfo.amount / +dollarsCurrency.sellPrice : +productInfo.amount * +dollarsCurrency.buyPrice;
+        newAmount = productCurrency === 1 ? +productInfo.amount * +currencyRates.sellPrice : +productInfo.amount / +currencyRates.buyPrice;
         setConversionRate(true);
       }
       setProductAmount(newAmount);
@@ -95,7 +95,7 @@ const UserDetails = (props) => {
         />
         {conversionRate && (
           <p style={{ textAlign: "left", fontSize: ".8rem" }}>
-            Tasa de conversión: Bs. {productInfo.currency.id === 1 ? formatAmount(dollarsCurrency.sellPrice) : formatAmount(dollarsCurrency.buyPrice)}
+            Tasa de conversión: Bs. {productInfo.currency.id === 1 ? formatAmount(currencyRates.sellPrice) : formatAmount(currencyRates.buyPrice)}
           </p>
         )}
       </div>
@@ -111,7 +111,7 @@ const UserDetails = (props) => {
           name='paymentType'
         >
           <option value=''>Selecciona una opción</option>
-          {values.currencyId === 1 ? (
+          {values.currencyId === 2 ? (
             <>
               <option value='account'>Débito en cuenta</option>
               <option value='card'>Tarjeta de crédito</option>

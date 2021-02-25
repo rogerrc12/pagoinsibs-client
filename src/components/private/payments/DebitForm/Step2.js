@@ -29,12 +29,12 @@ const PaymentDetails = (props) => {
   // set minimum amount based on product amount (check SupplierDetails select for product)
   useEffect(() => {
     setFieldValue("amount", totalProductAmount);
-    if (currencyId === 1) setFieldValue("paymentType", "account");
+    if (currencyId === 2) setFieldValue("paymentType", "account");
   }, [totalProductAmount, setFieldValue, currencyId]);
 
   const paymentFrequencyOptions = setPaymentFrequency(values.paymentPeriod, maxDebitMonths);
   const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
-  const dollarsCurrency = currencies.find((currency) => currency.id === 2);
+  const currencyRates = currencies.find((currency) => currency.id === 2);
 
   useEffect(() => {
     if (productInfo && productInfo.amount > 0) {
@@ -42,7 +42,7 @@ const PaymentDetails = (props) => {
       let newAmount = totalProductAmount;
 
       if (values.currencyId !== productCurrency) {
-        newAmount = productCurrency === 1 ? totalProductAmount / +dollarsCurrency.sellPrice : totalProductAmount * +dollarsCurrency.buyPrice;
+        newAmount = productCurrency === 1 ? totalProductAmount * +currencyRates.sellPrice : totalProductAmount / +currencyRates.buyPrice;
         setConversionRate(true);
       }
       setProductAmount(newAmount);
@@ -107,7 +107,7 @@ const PaymentDetails = (props) => {
         />
         {conversionRate && (
           <p style={{ textAlign: "left", fontSize: ".8rem" }}>
-            Tasa de conversión actual: Bs. {productInfo.currency.id === 1 ? formatAmount(dollarsCurrency.sellPrice) : formatAmount(dollarsCurrency.buyPrice)}
+            Tasa de conversión actual: Bs. {productInfo.currency.id === 1 ? formatAmount(currencyRates.sellPrice) : formatAmount(currencyRates.buyPrice)}
           </p>
         )}
       </div>
@@ -199,7 +199,7 @@ const PaymentDetails = (props) => {
         </p>
       )}
 
-      {values.currencyId === 2 && (
+      {values.currencyId === 1 && (
         <div className='col-12'>
           <Input
             onChange={(e) => {
@@ -217,7 +217,7 @@ const PaymentDetails = (props) => {
         </div>
       )}
 
-      {values.currencyId === 1 && (
+      {values.currencyId === 2 && (
         <div className='col-12'>
           <Account
             accounts={accounts}
