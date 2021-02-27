@@ -35,8 +35,8 @@ function* addAccount({ values }) {
     if (res.status === 200) {
       yield put(actions.addAccountSuccess());
       yield put(actions.getAccountsInit());
-      yield call([Swal, "fire"], "Exitoso", `La cuenta fue ${acc_id ? "Actualizada" : "Agregada"} correctamente.`, "success");
       yield put(closeModal());
+      yield call([Swal, "fire"], "Exitoso", `La cuenta fue ${acc_id ? "Actualizada" : "Agregada"} correctamente.`, "success");
     }
   } catch (error) {
     yield put(actions.apiError(error.message));

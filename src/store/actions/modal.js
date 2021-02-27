@@ -1,4 +1,4 @@
-import { SHOW_MODAL, CLOSE_MODAL } from '../constants';
+import { SHOW_MODAL, CLOSE_MODAL } from "../constants";
 
 export const showModal = () => (dispatch) => {
   dispatch({
@@ -6,7 +6,7 @@ export const showModal = () => (dispatch) => {
   });
 };
 
-export const closeModal = (modalType) => (dispatch) => {
+export const closeModal = () => (dispatch) => {
   dispatch({
     type: CLOSE_MODAL,
   });
