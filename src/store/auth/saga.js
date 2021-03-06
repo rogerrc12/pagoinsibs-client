@@ -7,13 +7,26 @@ import history from "../../helpers/history";
 import { closeModal } from "../settings/modal/actions";
 import Swal from "sweetalert2";
 
+function* setAuthData(data) {
+  const expDate = new Date();
+  expDate.setSeconds(expDate.getSeconds() + data.expiresIn);
+
+  yield call([localStorage, "setItem"], "authData", JSON.stringify({ token: data.token, expTime: expDate }));
+}
+
 function* loadUser() {
-  if (localStorage.token) setAuthToken(localStorage.token);
+  const authData = yield call([localStorage, "getItem"], "authData");
+  if (!authData) return yield call(logout);
+
+  const { token, expTime } = JSON.parse(authData);
+  if (!token || new Date(expTime) <= new Date()) return yield call(logout);
 
   try {
+    yield call(setAuthToken, token);
     const res = yield axios.get("/api/auth");
     if (res.status === 200) yield put(actions.loadUserSuccess(res.data));
   } catch (error) {
+    yield call(logout);
     yield put(actions.apiError());
   }
 }
@@ -23,7 +36,9 @@ function* loginUser(action) {
     const res = yield axios.post("/api/auth", action.values);
 
     if (res.status === 200) {
+      const authObj = { token: res.data.token, expiresIn: 3600 };
       yield put(actions.loginUserSuccess(res.data));
+      yield call(setAuthData, authObj);
       yield call(loadUser);
     }
   } catch (error) {
@@ -49,6 +64,7 @@ function* registerUser(action) {
 }
 
 function* logout() {
+  yield call([localStorage, "removeItem"], "authData");
   yield put(actions.clearUserData());
   yield put(actions.logoutSuccess());
   yield call([history, "push"], "/login");

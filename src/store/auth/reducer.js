@@ -23,8 +23,7 @@ export default function(state = initialState, action = {}) {
       return { ...state, isAuthenticated: true, user: payload, isLoading: false };
     case actionTypes.REGISTER_SUCCESS:
     case actionTypes.LOGIN_SUCCESS:
-      localStorage.setItem("token", payload.token);
-      return { ...state, ...payload, isLoading: false };
+      return { ...state, ...payload };
     case actionTypes.CHECK_PASS_RESET_TOKEN_SUCCESS:
       return { ...state, resetEmail: action.email };
     case actionTypes.PASSWORD_RESET_SUCCESS:

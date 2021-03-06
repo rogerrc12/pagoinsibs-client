@@ -4,7 +4,6 @@ import { LastLocationProvider } from "react-router-last-location";
 import MainApp from "./containers/MainApp";
 import moment from "moment";
 // Helpers
-import setAuthToken from "./helpers/setAuthToken";
 import history from "./helpers/history";
 // Redux
 import { Provider } from "react-redux";
@@ -17,8 +16,6 @@ import "ldbutton/dist/ldbtn.min.css";
 import "moment/locale/es";
 
 moment.locale("es");
-
-if (localStorage.token) setAuthToken(localStorage.token);
 
 function App() {
   useEffect(() => {
