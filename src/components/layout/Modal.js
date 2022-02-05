@@ -7,7 +7,7 @@ import Fade from "@material-ui/core/Fade";
 import { connect } from "react-redux";
 import { closeModal } from "../../store/actions";
 
-const Modal = ({ show, children, closeModal, type }) => {
+const Modal = ({ show, preventClose, children, closeModal, type }) => {
   useEffect(() => {
     const bodyEL = document.querySelector("body");
 
@@ -18,13 +18,18 @@ const Modal = ({ show, children, closeModal, type }) => {
     }
   });
 
+  const onCloseModal = () => {
+    if (preventClose) return;
+    closeModal(type);
+  };
+
   return (
     <ModalContent
-      aria-labelledby='modal-title'
-      aria-describedby='modal-description'
-      className='modal-container'
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+      className="modal-container"
       open={show}
-      onClose={() => closeModal(type)}
+      onClose={onCloseModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -32,8 +37,8 @@ const Modal = ({ show, children, closeModal, type }) => {
       }}
     >
       <Fade in={show}>
-        <div className='modal-body'>
-          <span className='modal-close fas fa-times' onClick={() => closeModal(type)}></span>
+        <div className="modal-body">
+          {!preventClose && <span className="modal-close fas fa-times" onClick={onCloseModal}></span>}
           {children}
         </div>
       </Fade>

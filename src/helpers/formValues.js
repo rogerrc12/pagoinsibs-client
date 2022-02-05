@@ -4,6 +4,7 @@ export const RegisterValues = (googleValues) => ({
   ci_type: "V",
   ci_number: "",
   email: googleValues.email || "",
+  secondaryEmail: "",
   username: "",
   password: "",
   confirm_password: "",

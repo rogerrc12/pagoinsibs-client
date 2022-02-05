@@ -43,22 +43,39 @@ function* loginUser(action) {
     }
   } catch (error) {
     yield put(actions.apiError(error.data ? error.data.message : error.message));
-    yield delay(3000);
+    yield delay(5000);
     yield put(actions.clearError());
   }
 }
 
-function* registerUser(action) {
+function* starUserRegistration({ values, setNextPage }) {
   try {
-    const res = yield axios.post("/api/users", action.values);
+    const res = yield axios.post("/api/auth/register/step-1", values);
 
     if (res.status === 200) {
-      yield put(actions.registerUserSuccess(res.data));
+      yield put(actions.startUserRegistrationSuccess());
+      yield call(setNextPage);
+    }
+  } catch (error) {
+    yield put(actions.apiError(error.data ? error.data.message : error.message));
+    yield delay(5000);
+    yield put(actions.clearError());
+  }
+}
+
+function* completeUserRegistration(action) {
+  try {
+    const res = yield axios.post("/api/auth/register/step-2", action.values);
+
+    if (res.status === 200) {
+      yield put(actions.completeUserRegistrationSuccess(res.data));
+      const authObj = { token: res.data.token, expiresIn: 3600 };
+      yield call(setAuthData, authObj);
       yield call(loadUser);
     }
   } catch (error) {
     yield put(actions.apiError(error.data ? error.data.message : error.message));
-    yield delay(3000);
+    yield delay(5000);
     yield put(actions.clearError());
   }
 }
@@ -132,7 +149,8 @@ export default function*() {
     takeLatest(types.LOGIN_INIT, loginUser),
     takeLatest(types.LOAD_USER_INIT, loadUser),
     takeLatest(types.LOGOUT_INIT, logout),
-    takeLatest(types.REGISTER_INIT, registerUser),
+    takeLatest(types.START_REGISTRATION_INIT, starUserRegistration),
+    takeLatest(types.COMPLETE_REGISTRATION_INIT, completeUserRegistration),
     takeLatest(types.SEND_PASS_RESET_INIT, sendPassReset),
     takeLatest(types.CHECK_PASS_RESET_TOKEN, checkPassResetToken),
     takeLatest(types.PASSWORD_RESET_INIT, resetPassword),

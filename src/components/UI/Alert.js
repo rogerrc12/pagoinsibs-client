@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Alert from "@material-ui/lab/Alert";
+import { Alert } from "@material-ui/lab";
 import Collapse from "@material-ui/core/Collapse";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,7 @@ export default function TransitionAlerts(props) {
   return (
     <div className={classes.root}>
       <Collapse in={open}>
-        <Alert severity='error' variant='outlined' className='my-2'>
+        <Alert variant="filled" severity="error" className="mb-3">
           {error}
         </Alert>
       </Collapse>

@@ -13,7 +13,7 @@ const PrivateRoute = ({ component: Component, auth: { isAuthenticated, user }, s
   }, [user, isAuthenticated, showModal]);
 
   return !user.profileCompleted && isAuthenticated ? (
-    <Modal>
+    <Modal preventClose>
       <ProfileForm />
     </Modal>
   ) : (

@@ -155,6 +155,7 @@ select {
   transition: all 0.3s ease-out;
   cursor: pointer;
   border: none;
+  box-shadow: 3px 2px 10px rgba(88, 88, 88, 0.2);
 }
 
 .google-button {
@@ -245,7 +246,9 @@ select option:disabled {
 
 .form-group input {
   width: 100%;
-  padding: 0.25rem 0;
+  padding: 0.25rem 0.75rem;
+  background-color: #fff;
+  border-radius: 5px;
 }
 
 .form-group input[type="checkbox"],
@@ -341,19 +344,17 @@ select option:disabled {
 
 .form-group select {
   border: none;
-  border-bottom: 1px solid var(--form-input-color);
-  background-color: transparent;
+  background-color: #fff;
   width: 100%;
   margin-top: 0.2rem;
+  padding: 0.25rem 0.75rem;
 }
 
-.form-group input,
 .form-group .input-group-text {
-  background-color: transparent;
+  background-color: #fff;
   border: none;
   border-bottom: 1px solid var(--form-input-color);
   width: 100%;
-  border-radius: 0 !important;
 }
 
 .form-group-flex {
@@ -371,7 +372,6 @@ input:focus,
   border-color: #37ce7b;
   border-width: 1px;
   box-shadow: none;
-  background-color: transparent;
 }
 .form-group input.error:focus,
 .input-group input.error:focus,
@@ -391,8 +391,8 @@ input.error:focus,
 
 .icon-group .input-icon {
   position: absolute;
-  right: 10px;
-  top: 30px;
+  right: 15px;
+  top: 60%;
   opacity: 0.5;
 }
 
@@ -403,10 +403,6 @@ input.error:focus,
 @media screen and (min-width: 35rem) {
   .form-group.amount-group input {
     width: 35%;
-  }
-
-  .icon-group .input-icon {
-    top: 25px;
   }
 }
 
@@ -3284,7 +3280,6 @@ input.error {
   width: auto;
   background-color: #fff;
   color: var(--text-color);
-  border: 1px solid var(--green-light);
 }
 
 .signup-form .continue-form .button {

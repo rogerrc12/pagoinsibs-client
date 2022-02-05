@@ -16,12 +16,16 @@ export default function(state = initialState, action = {}) {
   switch (type) {
     case actionTypes.LOAD_USER_INIT:
     case actionTypes.LOGIN_INIT:
-    case actionTypes.REGISTER_INIT:
+    case actionTypes.START_REGISTRATION_INIT:
+    case actionTypes.COMPLETE_REGISTRATION_INIT:
       return { ...state, isLoading: true };
+
+    case actionTypes.START_REGISTRATION_SUCCESS:
+      return { ...state, isLoading: false };
 
     case actionTypes.LOAD_USER_SUCCESS:
       return { ...state, isAuthenticated: true, user: payload, isLoading: false };
-    case actionTypes.REGISTER_SUCCESS:
+    case actionTypes.COMPLETE_REGISTRATION_SUCCESS:
     case actionTypes.LOGIN_SUCCESS:
       return { ...state, ...payload };
     case actionTypes.CHECK_PASS_RESET_TOKEN_SUCCESS:

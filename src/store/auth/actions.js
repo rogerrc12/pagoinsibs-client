@@ -10,13 +10,23 @@ export const loadUserSuccess = (data) => ({
 });
 
 // Register action
-export const registerUser = (values) => ({
-  type: actionTypes.REGISTER_INIT,
+export const startUserRegistration = (values, setNextPage) => ({
+  type: actionTypes.START_REGISTRATION_INIT,
+  values,
+  setNextPage,
+});
+
+export const startUserRegistrationSuccess = () => ({
+  type: actionTypes.START_REGISTRATION_SUCCESS,
+});
+
+export const completeUserRegistration = (values) => ({
+  type: actionTypes.COMPLETE_REGISTRATION_INIT,
   values,
 });
 
-export const registerUserSuccess = (data) => ({
-  type: actionTypes.REGISTER_SUCCESS,
+export const completeUserRegistrationSuccess = (data) => ({
+  type: actionTypes.COMPLETE_REGISTRATION_SUCCESS,
   payload: data,
 });
 
