@@ -8,7 +8,7 @@
   --text-color: #444;
   --btn-color: #e3fcee;
   --light-color: #f4f4f4;
-  --form-input-color: #bbb;
+  --form-input-color: #ced4da;
   --input-focus-color: #37ce7b;
   --error-color: #db5656;
 }
@@ -130,10 +130,6 @@ a {
 
 a:hover {
   text-decoration: none;
-}
-
-select {
-  border-radius: 0 !important;
 }
 
 .clearfix {
@@ -346,14 +342,17 @@ select option:disabled {
   border: none;
   background-color: #fff;
   width: 100%;
-  margin-top: 0.2rem;
   padding: 0.25rem 0.75rem;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
 }
 
 .form-group .input-group-text {
   background-color: #fff;
   border: none;
+  border-right: 1px solid var(--form-input-color);
   border-bottom: 1px solid var(--form-input-color);
+  border-top: 1px solid var(--form-input-color);
   width: 100%;
 }
 

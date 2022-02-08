@@ -25,6 +25,10 @@
 
   input[name="amount"] {
     width: 80%;
+    border: 1px solid #ced4da;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }
 

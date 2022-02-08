@@ -46,7 +46,7 @@ function* createPayment({ values, paymentId, paypalEmail }) {
   const formData = new FormData();
 
   formData.append("description", values.description);
-  formData.append("amount", values.amount);
+  formData.append("amount", +values.amount);
   formData.append("supplierId", values.supplierId);
   formData.append("accountId", values.accountId);
   formData.append("paymentType", values.paymentType);
@@ -67,7 +67,11 @@ function* createPayment({ values, paymentId, paypalEmail }) {
   }
 
   try {
-    const res = yield axios.post("/api/payments", formData);
+    const res = yield axios.post("/api/payments", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     if (res.status === 200) {
       yield call(
         [Swal, "fire"],

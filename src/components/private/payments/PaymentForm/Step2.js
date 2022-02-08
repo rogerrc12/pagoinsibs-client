@@ -15,14 +15,21 @@ import { showModal } from "../../../../store/actions/modal";
 import { getAccountInfoInit } from "../../../../store/actions";
 
 const UserDetails = (props) => {
-  const { getAccountInfoInit, productInfo, accounts, showModal, prevPage, paymentForm, nextPage, setFieldValue, currencies, values } = props;
-  const { accountId, description, amount, paymentType, productId } = values;
-  const [productAmount, setProductAmount] = useState(null);
-  const [conversionRate, setConversionRate] = useState(false);
+  const { getAccountInfoInit, productInfo, accounts, showModal, prevPage, paymentForm, nextPage, setFieldValue, currencies, values } = props,
+    { accountId, description, amount, paymentType, productId } = values,
+    [productAmount, setProductAmount] = useState(null),
+    [conversionRate, setConversionRate] = useState(false),
+    currencyDetails = currencies.find((currency) => currency.id === values.currencyId),
+    currencyRates = currencies.find((currency) => currency.id === 2),
+    accountsList = accounts.filter((account) => account.toSend),
+    accountOptions = accountsList.map((account) => ({
+      label: `${account.bank.bankName.substring(0, 18)} - termina en ${account.accNumber.substring(15, 20)}`,
+      value: Number(account.id),
+    }));
 
-  const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
-  const currencyRates = currencies.find((currency) => currency.id === 2);
+  console.log(values);
 
+  // EFFECTS
   useEffect(() => {
     if (productInfo && productInfo.amount > 0) {
       const productCurrency = productInfo.currency.id;
@@ -39,13 +46,6 @@ const UserDetails = (props) => {
     }
     // eslint-disable-next-line
   }, [currencies, productAmount, productInfo, setFieldValue]);
-
-  const accountsList = accounts.filter((account) => account.toSend);
-
-  const accountOptions = accountsList.map((account) => ({
-    label: `${account.bank.bankName.substring(0, 18)} - termina en ${account.accNumber.substring(15, 20)}`,
-    value: Number(account.id),
-  }));
 
   const onAmountChange = (value, field, form) => form.setFieldValue(field.name, +value);
 
@@ -79,14 +79,14 @@ const UserDetails = (props) => {
   };
 
   return (
-    <div className='row'>
-      <div className='col-12'>
-        <Input label='Concepto de pago' name='description' type='text' touched={props.touched.description} error={props.errors.description} />
+    <div className="row">
+      <div className="col-12">
+        <Input label="Concepto de pago" name="description" type="text" touched={props.touched.description} error={props.errors.description} />
       </div>
-      <div className='col-sm-6'>
+      <div className="col-sm-6">
         <NumberInput
-          label='Monto a pagar'
-          name='amount'
+          label="Monto a pagar"
+          name="amount"
           value={props.paymentForm === "product" && productAmount ? productAmount.toFixed(2) : 0}
           options={numberInputOptions}
           disabled={productId}
@@ -100,33 +100,33 @@ const UserDetails = (props) => {
         )}
       </div>
 
-      <div className='col-12'>
+      <div className="col-12">
         <Input
           onChange={(e) => {
             values.currencyId === 2 ? resetDollarValues() : resetBsValues();
             setFieldValue("paymentType", e.target.value);
           }}
-          label='Forma de pago'
-          type='select'
-          name='paymentType'
+          label="Forma de pago"
+          type="select"
+          name="paymentType"
         >
-          <option value=''>Selecciona una opción</option>
-          {values.currencyId === 2 ? (
+          <option value="">Selecciona una opción</option>
+          {values.currencyId === 1 ? (
             <>
-              <option value='account'>Débito en cuenta</option>
-              <option value='card'>Tarjeta de crédito</option>
+              <option value="account">Débito en cuenta</option>
+              <option value="card">Tarjeta de crédito</option>
             </>
           ) : (
             <>
-              <option value='zelle'>Zelle</option>
-              <option value='paypal'>Paypal</option>
+              <option value="zelle">Zelle</option>
+              <option value="paypal">Paypal</option>
             </>
           )}
         </Input>
       </div>
 
       {!paymentType ? null : paymentType === "account" ? (
-        <div className='col-12'>
+        <div className="col-12">
           <Account
             accounts={accounts}
             touched={props.touched.accountId}
@@ -144,7 +144,7 @@ const UserDetails = (props) => {
         <PaymentOption type={paymentType} values={values} setFieldValue={setFieldValue} errors={props.errors} touched={props.touched} />
       )}
 
-      <WrapperButtons type='button' disabled={!description || !amount || !paymentType || buttonValidation} prevPage={prevPage} nextPage={nextPage} />
+      <WrapperButtons type="button" disabled={!description || !amount || !paymentType || buttonValidation} prevPage={prevPage} nextPage={nextPage} />
 
       <Modal>
         <AccountForm />
