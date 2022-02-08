@@ -18,69 +18,67 @@ const PaymentDetail = ({ getPaymentDetailsInit, details, match, sendPaymentDetai
   // detail sent status
   const [sent, setSent] = useState(false);
 
-  console.log(details);
-
   const detailsList = (
     <>
-      <li className='detail-item detail-status'>
+      <li className="detail-item detail-status">
         <span className={`detail-right status ${details.status && details.status.name}`}>{details.status && details.status.name}</span>
       </li>
-      <li className='detail-item'>
-        <span className='detail-left'>Forma de pago:</span>
-        <span className='detail-right'>{details.paymentType}</span>
+      <li className="detail-item">
+        <span className="detail-left">Forma de pago:</span>
+        <span className="detail-right">{details.paymentType}</span>
       </li>
-      <li className='detail-item'>
-        <span className='detail-left'>Empresa que recibe:</span>
-        <span className='detail-right'>{details.supplier && details.supplier.name.toLowerCase()}</span>
+      <li className="detail-item">
+        <span className="detail-left">Empresa que recibe:</span>
+        <span className="detail-right">{details.supplier && details.supplier.name.toLowerCase()}</span>
       </li>
       {details.productId && (
-        <li className='detail-item'>
-          <span className='detail-left'>Producto a pagar:</span>
-          <span className='detail-right'>{details.product.name}</span>
+        <li className="detail-item">
+          <span className="detail-left">Producto a pagar:</span>
+          <span className="detail-right">{details.product.name}</span>
         </li>
       )}
       {details.paymentType === "account" && (
         <>
-          <li className='detail-item'>
-            <span className='detail-left'>Banco debitado:</span>
-            <span className='detail-right'>{details.bankName}</span>
+          <li className="detail-item">
+            <span className="detail-left">Banco debitado:</span>
+            <span className="detail-right">{details.bankName}</span>
           </li>
-          <li className='detail-item'>
-            <span className='detail-left'>Número de cuenta:</span>
-            <span className='detail-right'>termina en {details.accNumber.substring(16, 20)}</span>
+          <li className="detail-item">
+            <span className="detail-left">Número de cuenta:</span>
+            <span className="detail-right">termina en {details.accNumber.substring(16, 20)}</span>
           </li>
-          <li className='detail-item'>
-            <span className='detail-left'>Tipo de cuenta:</span>
-            <span className='detail-right'>{details.accType}</span>
+          <li className="detail-item">
+            <span className="detail-left">Tipo de cuenta:</span>
+            <span className="detail-right">{details.accType}</span>
           </li>
         </>
       )}
       {details.paymentType === "card" && (
-        <li className='detail-item'>
-          <span className='detail-left'>Tarjeta</span>
-          <span className='detail-right'>{details.cardBrand + " " + details.cardLastNumbers}</span>
+        <li className="detail-item">
+          <span className="detail-left">Tarjeta</span>
+          <span className="detail-right">{details.cardBrand + " " + details.cardLastNumbers}</span>
         </li>
       )}
 
       {details.paymentType === "paypal" && (
-        <li className='detail-item'>
-          <span className='detail-left'>Correo de pago:</span>
-          <span className='detail-right'>{details.paypalEmail}</span>
+        <li className="detail-item">
+          <span className="detail-left">Correo de pago:</span>
+          <span className="detail-right">{details.paypalEmail}</span>
         </li>
       )}
       {details.paypalPaymentId && (
-        <li className='detail-item'>
-          <span className='detail-left'>ID de pago de:</span>
-          <span className='detail-right'>{details.paypalPaymentId}</span>
+        <li className="detail-item">
+          <span className="detail-left">ID de pago de:</span>
+          <span className="detail-right">{details.paypalPaymentId}</span>
         </li>
       )}
 
       {details.zelleFileUrl && (
-        <li className='detail-item'>
-          <span className='detail-left'>Captura de pago:</span>
-          <div className='detail-right'>
-            <a href={details.zelleFileUrl} target='_blank' rel='noopener noreferrer'>
-              <img src={details.zelleFileUrl} alt='Captura de pago zelle' />
+        <li className="detail-item">
+          <span className="detail-left">Captura de pago:</span>
+          <div className="detail-right">
+            <a href={details.zelleFileUrl} target="_blank" rel="noopener noreferrer">
+              <img src={details.zelleFileUrl} alt="Captura de pago zelle" />
             </a>
           </div>
         </li>
@@ -89,16 +87,16 @@ const PaymentDetail = ({ getPaymentDetailsInit, details, match, sendPaymentDetai
   );
 
   return (
-    <main className='dash-main main-user__dash'>
-      <section className='detail-section'>
+    <main className="dash-main main-user__dash">
+      <section className="detail-section">
         <DetailHeader details={details} skeleton={isLoading} />
-        <article className='details-transaction'>
-          <ul className='detail-list'>{details.paymentType && detailsList}</ul>
+        <article className="details-transaction">
+          <ul className="detail-list">{details.paymentType && detailsList}</ul>
         </article>
-        <footer className='detail-footer'>
+        <footer className="detail-footer">
           <button
-            type='submit'
-            className='button'
+            type="submit"
+            className="button"
             disabled={sent}
             onClick={async () => {
               const detailSent = await sendPaymentDetails(id);
@@ -114,21 +112,21 @@ const PaymentDetail = ({ getPaymentDetailsInit, details, match, sendPaymentDetai
 };
 
 const DetailHeader = ({ details, skeleton }) => (
-  <header className='detail-header'>
+  <header className="detail-header">
     {skeleton ? (
       <div style={{ textAlign: "center" }}>
-        <Skeleton animation='wave' width={200} height={30} style={{ marginBottom: "1.5rem", textAlign: "left" }} />
-        <Skeleton animation='wave' width={250} height={50} style={{ margin: "0 auto" }} />
-        <Skeleton animation='wave' width={100} height={30} style={{ margin: "0 auto" }} />
-        <Skeleton animation='wave' width={130} height={30} style={{ margin: "0 auto 1.5rem" }} />
+        <Skeleton animation="wave" width={200} height={30} style={{ marginBottom: "1.5rem", textAlign: "left" }} />
+        <Skeleton animation="wave" width={250} height={50} style={{ margin: "0 auto" }} />
+        <Skeleton animation="wave" width={100} height={30} style={{ margin: "0 auto" }} />
+        <Skeleton animation="wave" width={130} height={30} style={{ margin: "0 auto 1.5rem" }} />
       </div>
     ) : (
       <>
-        <span className='detail-header__date'>
-          <Moment format='DD MMM YYYY, h:mm a'>{details.createdAt}</Moment>
+        <span className="detail-header__date">
+          <Moment format="DD MMM YYYY, h:mm a">{details.createdAt}</Moment>
         </span>
         <h2>Pago #{details.id}</h2>
-        <span className='detail-header__price'>
+        <span className="detail-header__price">
           {setCurrency(details.amount)} {details.currency && details.currency.symbol}
         </span>
         <p>{details.description}</p>

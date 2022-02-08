@@ -20,14 +20,12 @@ const UserDetails = (props) => {
     [productAmount, setProductAmount] = useState(null),
     [conversionRate, setConversionRate] = useState(false),
     currencyDetails = currencies.find((currency) => currency.id === values.currencyId),
-    currencyRates = currencies.find((currency) => currency.id === 2),
+    currencyRates = currencies.find((currency) => currency.id === 1),
     accountsList = accounts.filter((account) => account.toSend),
     accountOptions = accountsList.map((account) => ({
       label: `${account.bank.bankName.substring(0, 18)} - termina en ${account.accNumber.substring(15, 20)}`,
       value: Number(account.id),
     }));
-
-  console.log(values);
 
   // EFFECTS
   useEffect(() => {
@@ -103,7 +101,7 @@ const UserDetails = (props) => {
       <div className="col-12">
         <Input
           onChange={(e) => {
-            values.currencyId === 2 ? resetDollarValues() : resetBsValues();
+            values.currencyId === 1 ? resetDollarValues() : resetBsValues();
             setFieldValue("paymentType", e.target.value);
           }}
           label="Forma de pago"
@@ -111,7 +109,7 @@ const UserDetails = (props) => {
           name="paymentType"
         >
           <option value="">Selecciona una opción</option>
-          {values.currencyId === 1 ? (
+          {values.currencyId === 2 ? (
             <>
               <option value="account">Débito en cuenta</option>
               <option value="card">Tarjeta de crédito</option>

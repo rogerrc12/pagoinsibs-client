@@ -34,7 +34,7 @@ const PaymentDetails = (props) => {
 
   const paymentFrequencyOptions = setPaymentFrequency(values.paymentPeriod, maxDebitMonths);
   const currencyDetails = currencies.find((currency) => currency.id === values.currencyId);
-  const currencyRates = currencies.find((currency) => currency.id === 2);
+  const currencyRates = currencies.find((currency) => currency.id === 1);
 
   useEffect(() => {
     if (productInfo && productInfo.amount > 0) {
@@ -85,15 +85,15 @@ const PaymentDetails = (props) => {
   const date = new Date();
 
   return (
-    <div className='row'>
-      <div className='col-12'>
-        <Input label='Concepto de pago' name='description' type='text' touched={touched.description} error={errors.description} />
+    <div className="row">
+      <div className="col-12">
+        <Input label="Concepto de pago" name="description" type="text" touched={touched.description} error={errors.description} />
       </div>
 
-      <div className='col-sm-6 col-10'>
+      <div className="col-sm-6 col-10">
         <NumberInput
-          label='Monto a pagar'
-          name='amount'
+          label="Monto a pagar"
+          name="amount"
           value={values.amount ? values.amount.toFixed(2) : ""}
           options={{
             numeral: true,
@@ -112,80 +112,80 @@ const PaymentDetails = (props) => {
         )}
       </div>
       {conversionRate && productInfo.currency.id !== 1 && (
-        <span className='form-error'>El monto en bolívares de tus cuotas pendientes se actualizará según cambio de tasa en el banco central y en nuestra plataforma.</span>
+        <span className="form-error">El monto en bolívares de tus cuotas pendientes se actualizará según cambio de tasa en el banco central y en nuestra plataforma.</span>
       )}
 
-      <div className='col-12'>
-        <div className='form-group mt-2'>
+      <div className="col-12">
+        <div className="form-group mt-2">
           <label>¿Comó serán tus pagos?</label>
         </div>
 
-        <div className='form-group mt-1 form-check-group'>
+        <div className="form-group mt-1 form-check-group">
           <Radio
-            label='Debitos consecutivos'
-            id='debitType1'
-            name='debitType'
+            label="Debitos consecutivos"
+            id="debitType1"
+            name="debitType"
             touched={touched.debitType}
             error={errors.debitType}
-            value='recurrente'
+            value="recurrente"
             onClick={consecutiveDebitHandler}
           />
 
-          <Radio label='Fraccionado en cuotas' id='debitType2' name='debitType' touched={touched.debitType} error={errors.debitType} value='fraccionado' />
+          <Radio label="Fraccionado en cuotas" id="debitType2" name="debitType" touched={touched.debitType} error={errors.debitType} value="fraccionado" />
         </div>
-        <ErrorMessage name='debitType'>
+        <ErrorMessage name="debitType">
           {(message) => (
-            <span className='form-error'>
-              <i className='fas fa-warning' /> {message}
+            <span className="form-error">
+              <i className="fas fa-warning" /> {message}
             </span>
           )}
         </ErrorMessage>
       </div>
 
-      <div className='col-md-6'>
+      <div className="col-md-6">
         <Input
-          type='select'
-          name='paymentPeriod'
+          type="select"
+          name="paymentPeriod"
           touched={touched.paymentPeriod}
           error={errors.paymentPeriod}
-          label='Períodos de pago'
+          label="Períodos de pago"
           disabled={values.debitType === "recurrente"}
         >
-          <option value=''>selecciona un período</option>
-          <option value='semanal'>Semanales</option>
-          <option value='quincenal'>Quincenales</option>
-          <option value='mensual'>Mensuales</option>
+          <option value="">selecciona un período</option>
+          <option value="semanal">Semanales</option>
+          <option value="quincenal">Quincenales</option>
+          <option value="mensual">Mensuales</option>
         </Input>
       </div>
 
       {values.debitType === "fraccionado" && (
         <>
-          <div className='col-md-6'>
+          <div className="col-md-6">
             <CustomSelect
-              name='paymentFrequency'
+              name="paymentFrequency"
               options={paymentFrequencyOptions}
               onChange={(option, field, form) => onFrequencyChange(option, field, form)}
-              placeholder='selecciona un tiempo'
-              selectClassName='suppliers-select'
+              placeholder="selecciona un tiempo"
+              selectClassName="suppliers-select"
               touched={touched.paymentFrequency}
               error={errors.paymentFrequency}
-              label='Tiempo de pago'
+              label="Tiempo de pago"
             />
           </div>
 
-          <div className='col-md-6'>
-            <Input label='Monto por cuota' name='feeAmount' value={feeAmountInput} disabled />
+          <div className="col-md-6">
+            <Input label="Monto por cuota" name="feeAmount" value={feeAmountInput} disabled />
           </div>
         </>
       )}
 
-      <div className='col-md-6'>
+      <div className="col-md-6">
         <DatePicker
           disableToolbar
-          variant='inline'
-          name='startPaymentDate'
-          label='Fecha de inicio de cobro'
-          format='dddd, D [de] MMMM'
+          variant="inline"
+          name="startPaymentDate"
+          label="Fecha de inicio de cobro"
+          format="dddd, D [de] MMMM"
           value={values.startPaymentDate}
           minDate={new Date()}
           maxDate={new Date(date.setMonth(date.getMonth() + 1))}
@@ -193,32 +193,32 @@ const PaymentDetails = (props) => {
       </div>
 
       {values.debitType === "recurrente" && (
-        <p className='form-msg'>
-          <span className='fas fa-info-circle' /> Los pagos consecutivos son debitos constantes usados en servicios que serán debitados de su cuenta de forma indefinida
+        <p className="form-msg">
+          <span className="fas fa-info-circle" /> Los pagos consecutivos son debitos constantes usados en servicios que serán debitados de su cuenta de forma indefinida
           mensualmente. Solo pueden ser cancelados previa autorización del cliente.
         </p>
       )}
 
       {values.currencyId === 1 && (
-        <div className='col-12'>
+        <div className="col-12">
           <Input
             onChange={(e) => {
               setFieldValue("accountId", "");
               setFieldValue("paymentType", e.target.value);
             }}
-            label='Forma de pago'
-            type='select'
-            name='paymentType'
+            label="Forma de pago"
+            type="select"
+            name="paymentType"
           >
-            <option value=''>Selecciona una opción</option>
-            <option value='zelle'>Zelle</option>
-            <option value='paypal'>Paypal</option>
+            <option value="">Selecciona una opción</option>
+            <option value="zelle">Zelle</option>
+            <option value="paypal">Paypal</option>
           </Input>
         </div>
       )}
 
       {values.currencyId === 2 && (
-        <div className='col-12'>
+        <div className="col-12">
           <Account
             accounts={accounts}
             touched={props.touched.acconutId}
@@ -234,7 +234,7 @@ const PaymentDetails = (props) => {
         </div>
       )}
 
-      <WrapperButtons type='button' disabled={buttonValidation} prevPage={prevPage} nextPage={nextPage} />
+      <WrapperButtons type="button" disabled={buttonValidation} prevPage={prevPage} nextPage={nextPage} />
 
       <Modal>
         <AccountForm />
